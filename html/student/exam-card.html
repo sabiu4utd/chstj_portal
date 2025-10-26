@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Card - KSCHST Portal</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .exam-card {
+            border: 2px solid #1a4b84;
+            background-color: #fff;
+        }
+        .exam-card-header {
+            background-color: #1a4b84;
+            color: white;
+            padding: 1rem;
+        }
+        .exam-card .profile-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        @media print {
+            .sidebar, .main-header, .no-print {
+                display: none !important;
+            }
+            .exam-card {
+                border: 2px solid #000;
+            }
+            .exam-card-header {
+                background-color: #000 !important;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar px-3 py-4" style="width: 280px;">
+            <div class="text-center mb-4">
+                <img src="../logo (1).jpg" alt="KSCHST Logo" class="img-fluid mb-3" style="max-height: 80px;">
+                <h6 class="mb-0 text-white">Student Portal</h6>
+            </div>
+            
+            <nav class="nav flex-column">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-home me-2"></i> Dashboard
+                </a>
+                <a class="nav-link" href="information.html">
+                    <i class="fas fa-user me-2"></i> My Information
+                </a>
+                <a class="nav-link" href="payment.html">
+                    <i class="fas fa-credit-card me-2"></i> My Payment
+                </a>
+                <a class="nav-link" href="courses.html">
+                    <i class="fas fa-book me-2"></i> My Courses
+                </a>
+                <a class="nav-link" href="accommodation.html">
+                    <i class="fas fa-building me-2"></i> Accommodation
+                </a>
+                <a class="nav-link" href="result.html">
+                    <i class="fas fa-chart-bar me-2"></i> My Result
+                </a>
+                <a class="nav-link active" href="exam-card.html">
+                    <i class="fas fa-id-card me-2"></i> Exam Card
+                </a>
+                <a class="nav-link" href="forms.html">
+                    <i class="fas fa-file-alt me-2"></i> Forms
+                </a>
+                <a class="nav-link mt-4 text-danger" href="../index.html">
+                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-grow-1 bg-light">
+            <!-- Header -->
+            <header class="main-header p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0">Exam Card</h4>
+                        <small class="text-muted">View and print your examination card</small>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <i class="fas fa-bell text-muted"></i>
+                        </div>
+                        <img src="https://via.placeholder.com/40" class="rounded-circle profile-image" alt="Profile">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="p-4">
+                <!-- Verification Status -->
+                <div class="alert alert-success mb-4" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Your exam card has been verified and is ready for printing
+                </div>
+
+                <!-- Print Button -->
+                <div class="text-end mb-4 no-print">
+                    <button class="btn btn-primary" onclick="window.print()">
+                        <i class="fas fa-print me-2"></i>Print Exam Card
+                    </button>
+                </div>
+
+                <!-- Exam Card -->
+                <div class="card exam-card">
+                    <div class="exam-card-header text-center">
+                        <img src="../logo (1).jpg" alt="KSCHST Logo" class="img-fluid mb-2" style="max-height: 80px;">
+                        <h4 class="mb-1">Kebbi State College of Health Sciences and Technology</h4>
+                        <h5 class="mb-0">EXAMINATION CARD</h5>
+                        <p class="mb-0">2023/2024 Academic Session - Second Semester</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row">
+                            <div class="col-md-4 text-center mb-4">
+                                <img src="https://via.placeholder.com/150" class="rounded profile-image mb-3" alt="Student Photo">
+                                <div class="mt-2">
+                                    <img src="https://via.placeholder.com/150x50" alt="Signature" class="img-fluid">
+                                    <div class="border-top mt-2">
+                                        <small>Student's Signature</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Student Name:</strong></p>
+                                        <p>John Doe</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Registration Number:</strong></p>
+                                        <p>STD/2023/001</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Department:</strong></p>
+                                        <p>Community Health</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Level:</strong></p>
+                                        <p>200 Level</p>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Session:</strong></p>
+                                        <p>2023/2024</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="mb-1"><strong>Semester:</strong></p>
+                                        <p>Second Semester</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h6 class="mb-3">Registered Courses</h6>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Course Code</th>
+                                            <th>Course Title</th>
+                                            <th>Credit Units</th>
+                                            <th>Invigilator's Signature</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>CHT201</td>
+                                            <td>Community Health Practice</td>
+                                            <td>3</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>CHT202</td>
+                                            <td>Primary Health Care</td>
+                                            <td>3</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>CHT203</td>
+                                            <td>Health Education</td>
+                                            <td>2</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-1"><strong>Payment Status:</strong></p>
+                                    <p class="text-success">Cleared</p>
+                                </div>
+                                <div class="col-md-6 text-end">
+                                    <p class="mb-1"><strong>Verified By:</strong></p>
+                                    <img src="https://via.placeholder.com/150x50" alt="Registrar Signature" class="img-fluid" style="max-height: 50px;">
+                                    <div class="border-top mt-2">
+                                        <small>Registrar</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <small class="text-muted">
+                            <strong>Note:</strong> This exam card must be presented at every examination. It is not valid without the college stamp and signature.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/responsive.js"></script>
+</body>
+</html>

@@ -110,7 +110,7 @@
                             <div class="card-body">
                                <form action="<?php echo site_url('staff/fetch_student') ?>" method="post">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Application Number or Admission number" name="pnumber" id="pnumber" aria-label="Search student by name or admission number" aria-describedby="button-addon2">
+                                    <input type="text" class="form-control" required placeholder="Application Number or Admission number" name="pnumber" id="pnumber" aria-label="Search student by name or admission number" aria-describedby="button-addon2">
                                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Fetch Student Record</button>
                                 </div>
                                </form>

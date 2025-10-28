@@ -121,8 +121,8 @@
                         <div class="card mb-4">
                             <div class="card-body text-center">
                                 <img src="https://via.placeholder.com/150" class="rounded-circle mb-3 profile-image" alt="Profile Picture" style="width: 150px; height: 150px;">
-                                <h5 class="mb-1">John Doe</h5>
-                                <p class="text-muted mb-3">STD/2023/001</p>
+                                <h5 class="mb-1"><?php echo $_SESSION['firstname']; ?> <?php echo $_SESSION['surname']; ?></h5>
+                                <p class="text-muted mb-3"><?php echo $_SESSION['uniqueID']; ?></p>
                                 <button class="btn btn-primary btn-sm">Change Photo</button>
                             </div>
                         </div>
@@ -148,21 +148,22 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <label class="form-label">First Name</label>
-                                                    <input type="text" class="form-control" value="John">
+                                                    <input type="text" class="form-control" value="<?php echo $_SESSION['firstname']; ?>">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label">Last Name</label>
-                                                    <input type="text" class="form-control" value="Doe">
+                                                    <input type="text" class="form-control" value="<?php echo $_SESSION['surname']; ?>">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <label class="form-label">Date of Birth</label>
-                                                    <input type="date" class="form-control" value="1998-05-15">
+                                                    <input type="date" class="form-control" value="<?php echo $_SESSION['dob']; ?>">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label">Gender</label>
                                                     <select class="form-select">
+                                                        <option value="<?php echo $_SESSION['gender']; ?>"><?php echo $_SESSION['gender']; ?></option>
                                                         <option value="male">Male</option>
                                                         <option value="female">Female</option>
                                                     </select>
@@ -181,31 +182,31 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <label class="form-label">Department</label>
-                                                    <input type="text" class="form-control" value="Health Sciences" readonly>
+                                                    <input type="text" class="form-control" value="<?php echo $_SESSION['dept_name']; ?>" readonly>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label">Program</label>
-                                                    <input type="text" class="form-control" value="Community Health" readonly>
+                                                    <input type="text" class="form-control" value="<?php echo $_SESSION['program']; ?>" readonly>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <label class="form-label">Level</label>
-                                                    <input type="text" class="form-control" value="200" readonly>
+                                                    <input type="text" class="form-control" value="<?php echo $_SESSION['current_level']; ?>" readonly>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label">Registration Number</label>
-                                                    <input type="text" class="form-control" value="STD/2023/001" readonly>
+                                                    <input type="text" class="form-control" value="<?php echo $_SESSION['uniqueID']; ?>" readonly>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <label class="form-label">Entry Year</label>
-                                                    <input type="text" class="form-control" value="2023" readonly>
+                                                    <input type="text" class="form-control" value="<?php echo $_SESSION['session_admitted']; ?>" readonly>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label">Expected Graduation</label>
-                                                    <input type="text" class="form-control" value="2025" readonly>
+                                                    <input type="text" class="form-control" value="<?php echo $_SESSION['session_admitted']; ?>" readonly>
                                                 </div>
                                             </div>
                                         </form>
@@ -216,31 +217,31 @@
                                         <form>
                                             <div class="mb-3">
                                                 <label class="form-label">Email Address</label>
-                                                <input type="email" class="form-control" value="john.doe@example.com">
+                                                <input type="email" class="form-control" value="<?php echo $_SESSION['email']; ?>">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Phone Number</label>
-                                                <input type="tel" class="form-control" value="+234 800 000 0000">
+                                                <input type="tel" class="form-control" value="<?php echo $_SESSION['phone']; ?>">
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Address</label>
-                                                <textarea class="form-control" rows="3">123 Main Street, Jega, Kebbi State</textarea>
+                                                <textarea class="form-control" rows="3"><?php echo $_SESSION['email']; ?></textarea>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <label class="form-label">State</label>
-                                                    <input type="text" class="form-control" value="Kebbi">
+                                                    <input type="text" class="form-control" value="<?php echo $_SESSION['state_name']; ?>">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="form-label">LGA</label>
-                                                    <input type="text" class="form-control" value="Jega">
+                                                    <input type="text" class="form-control" value="<?php echo $_SESSION['lgaid']; ?>">
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <button class="btn btn-primary">Save Changes</button>
+                                    <!-- <button class="btn btn-primary">Save Changes</button> -->
                                     <button class="btn btn-outline-secondary ms-2">Cancel</button>
                                 </div>
                             </div>

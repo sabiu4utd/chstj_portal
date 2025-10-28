@@ -9,6 +9,9 @@ use App\Models\Student_model;
 use App\Models\Staff_model;
 use App\Models\Department_model;
 use App\Models\Hostel_model;
+use App\Models\Programmes_model;
+use App\Models\State_model;
+use App\Models\Lgas_model;
 
 class Auth extends BaseController
 {
@@ -53,6 +56,16 @@ class Auth extends BaseController
             $departmentModel = new Department_model();
             $department = $departmentModel->where('deptid', $user['deptid'])->first();
             $_SESSION['dept_name'] = $department['dept_name'];
+            $programModel = new Programmes_model();
+            $program = $programModel->where('program_id', $user['programid'])->first();
+            $_SESSION['program'] = $program['program'];
+            $stateModel = new State_model();
+            $state = $stateModel->where('stateid', $user['stateid'])->first();
+            $_SESSION['state_name'] = $state['state_name'];
+            $lgaModel = new Lgas_model();
+            // $lga = $lgaModel->where('id', $user['lgaid'])->first();
+            // $_SESSION['lga_name'] = $lga['lga_name'];
+          
         }
 
 
@@ -81,8 +94,13 @@ class Auth extends BaseController
                 'email' => $user['email'] ?? '',
                 'current_session' => $current_setting['value'],
                 'session_id' => $current_setting['id'],
-                'session_admitted' => $user['session_admitted'] ?? ''
-
+                'session_admitted' => $user['session_admitted'] ?? '',
+                'dob' => $user['dob'] ?? '',
+                'stateid' => $user['stateid'] ?? '',
+                'lgaid' => $user['lgaid'] ?? '',
+                'address' => $user['address'] ?? '',
+                'phone' => $user['phone'] ?? '',
+               
             ];
             $this->session->set($sessionData);
             if ($user['usertype'] == 'staff') {

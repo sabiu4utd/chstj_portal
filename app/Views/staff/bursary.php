@@ -1,3 +1,5 @@
+
+<?php //var_dump($payments); exit;?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -171,50 +173,66 @@
                 <!-- Fee Structure and Payment History -->
                 <div class="row g-4">
                     <!-- Fee Structure -->
-                    <div class="col-md-4">
+                    
+
+                    <!-- Payment History -->
+                    <div class="col-md-3">
+                        <div class="card">
+                          <a href="" data-bs-toggle="modal" data-bs-target="#addFeeModal" class="btn btn-primary">Add Fee Item</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                          <a href="" class="btn btn-primary">Generate Report</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                          <a href="" class="btn btn-primary">Payment Schedule</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                          <a href="" class="btn btn-primary">Payment History</a>
+                        </div>
+                    </div>
+
+                    <!-- Payment Analytics -->
+                   
+                </div>
+<hr>
+
+
+
+                 <div class="row g-4">
+                    <!-- Fee Structure -->
+                  <div class="col-12">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center py-3">
-                                <h5 class="mb-0">Fee Structure</h5>
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addFeeModal">
-                                    <i class="fas fa-plus me-2"></i>Add Fee
-                                </button>
+                                <h5 class="mb-0">Verify Payments</h5>
+                               
                             </div>
                             <div class="card-body">
-                                <div class="list-group list-group-flush">
-                                    <div class="list-group-item">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h6 class="mb-1">Tuition Fee</h6>
-                                                <small class="text-muted">Per Semester</small>
-                                            </div>
-                                            <h5 class="mb-0">₦45,000</h5>
+                                <form action="">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="form-label">Matric Number</label>
+                                            <input type="text" name="pnumber" placeholder="Enter Matric Number" required class="form-control">
                                         </div>
                                     </div>
-                                    <div class="list-group-item">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h6 class="mb-1">Hostel Fee</h6>
-                                                <small class="text-muted">Per Year</small>
-                                            </div>
-                                            <h5 class="mb-0">₦30,000</h5>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                           <input type="submit" value="Load Student Payments" class="btn btn-primary">
                                         </div>
                                     </div>
-                                    <div class="list-group-item">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h6 class="mb-1">Library Fee</h6>
-                                                <small class="text-muted">Per Year</small>
-                                            </div>
-                                            <h5 class="mb-0">₦5,000</h5>
-                                        </div>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
 
                     <!-- Payment History -->
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="mb-0">Recent Payments</h5>
@@ -224,6 +242,7 @@
                                     <table class="table" id="paymentsTable">
                                         <thead>
                                             <tr>
+                                                <th>SN</th>
                                                 <th>Receipt No.</th>
                                                 <th>Student Name</th>
                                                 <th>Registration No.</th>
@@ -235,13 +254,16 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php $sn = 1; foreach ($payments as $payment) { ?>
                                             <tr>
-                                                <td>RCP-001</td>
-                                                <td>John Doe</td>
-                                                <td>STD/2023/001</td>
-                                                <td>₦45,000</td>
-                                                <td>Tuition</td>
-                                                <td>2023-08-24</td>
+                                                <td><?php echo $sn++; ?></td>
+                                                <td><?php echo $payment['transaction_reference']; ?></td>
+                                                <td><?php echo $payment['firstname'] . ' ' . $payment['surname'].' '.$payment['othername']; ?></td>
+                                                <td><?php echo $payment['pnumber']; ?></td>
+                                                <td><?php echo $payment['amount']; ?></td>
+                                                <td><?php echo $payment['type']; ?></td>
+                                                <td><?php echo $payment['created_at']; ?></td>
+                                                <td><?php echo $payment['status']; ?></td>
                                                 <td><span class="badge bg-success">Verified</span></td>
                                                 <td>
                                                     <button class="btn btn-sm btn-outline-primary">
@@ -249,6 +271,7 @@
                                                     </button>
                                                 </td>
                                             </tr>
+                                            <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -257,23 +280,7 @@
                     </div>
 
                     <!-- Payment Analytics -->
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="mb-0">Payment Analytics</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <canvas id="paymentChart"></canvas>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <canvas id="trendChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>

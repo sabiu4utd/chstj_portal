@@ -8,11 +8,15 @@
     foreach($state as $st){
        $states .="<option value=".$st['stateid']." >" . $st['state_name'] . "</option>";
     }
+    $program= "";
+    foreach($programmes as $progs){
+       $program .="<option value=".$progs['program_id']." >" . $progs['program'] . "</option>";
+    }
 ?>
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">    
 
 <head>
     <meta charset="UTF-8">
@@ -334,7 +338,7 @@
                                 <label class="form-label">Programe<span class="mandatory">(*)</span></label>
                                 <select name="programid" class="form-select" required>
                                     <option value="">Select Programmme</option>
-                                     <?php echo $prog; ?>
+                                     <?php echo $program; ?>
                                 </select>
                             </div>
                         </div>

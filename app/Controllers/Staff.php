@@ -51,6 +51,7 @@ class Staff extends BaseController
     {
         $departmentModel = new Department_model();
         $data['departments'] = $departmentModel->findAll();
+        $data['programmes'] = (new Programmes_model())->findAll();
         $data['state'] = (new State_model())->findAll();
         $data['totalstudents'] = (new Student_model())->findAll();
         $data['newstudents'] = (new Student_model())->where('current_level', 100)->findAll();
@@ -88,7 +89,13 @@ class Staff extends BaseController
     }
     public function bursaryManager(): string
     {
-        return view('staff/bursary');
+        $paymentmodel = new Payment_model();
+        $data['payments'] = $paymentmodel
+        ->join('students', 'students.user_id = payments.user_id')
+        ->orderBy('payments.created_at', 'DESC')
+        ->limit(100)
+        ->findAll();
+        return view('staff/bursary', $data);
     }
     public function resultManager(): string
     {

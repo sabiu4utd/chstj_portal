@@ -58,7 +58,7 @@ class Staff extends BaseController
 
         return view('staff/students', $data);
     }
-    public function courseManager(): string
+    public function courseManager()
     {
         $settingsmodel = new Settings_model();
         $currentsession = $settingsmodel
@@ -73,11 +73,12 @@ class Staff extends BaseController
             ->findAll();
 
         $departmentModel  = new Department_model();
-
         $departments = $departmentModel->findAll();
+        $programmodel = new Programmes_model();
+        $programs = $programmodel->findAll();
 
 
-        return view('staff/courses', ['semester' => $semesters, 'active_session' => $currentsession, 'departments' => $departments]);
+        return view('staff/courses', ['semester' => $semesters, 'active_session' => $currentsession, 'departments' => $departments, 'programs' => $programs]);
     }
     public function hostelManager(): string
     {

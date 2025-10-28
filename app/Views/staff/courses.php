@@ -13,6 +13,11 @@ $depts = "";
 foreach($departments as $dp){
     $depts .="<option value=".$dp['deptid'].">".$dp['dept_name']."</option>";
 }
+
+$program = "";
+foreach($programs as $pg){
+    $program .="<option value=".$pg['program_id'].">".$pg['program']."</option>";
+}
  ?>
 
 
@@ -306,8 +311,8 @@ foreach($departments as $dp){
                             <div class="col-md-6">
                                 <label class="form-label">Department</label>
                                 <select name="deptid" class="form-select" required>
-                                    <option value="">Select Department</option>
-                                  <?php echo $depts; ?>
+                                    <option value="">Select Programme</option>
+                                  <?php echo $program; ?>
                                 </select>
                             </div>
                             <div class="col-md-6">

@@ -199,17 +199,17 @@ foreach ($programmes as $programme) {
                     </div>
                     <div class="col-md-3">
                         <div class="card">
-                            <a href="" class="btn btn-primary">Generate Report</a>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#reportModal" class="btn btn-primary">Generate Report</a>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card">
-                            <a href="" class="btn btn-primary">Payment Schedule</a>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#paymentscheduleModal" class="btn btn-primary">Payment Schedule</a>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="card">
-                            <a href="" class="btn btn-primary">Payment History</a>
+                            <a href="" data-bs-toggle="modal" data-bs-target="#paymentHistoryModal" class="btn btn-primary">Payment History</a>
                         </div>
                     </div>
 
@@ -304,6 +304,73 @@ foreach ($programmes as $programme) {
     </div>
 
     <!-- Add Fee Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Generate Report</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="<?php echo site_url('staff/generateReport'); ?>">
+                        <div class="mb-3">
+                            <label class="form-label">Programme</label>
+                            <select name="programid" class="form-select" required>
+                                <option value="">Select Programme</option>
+
+                                <?php echo $prg; ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Payment Type</label>
+                            <select name="type" class="form-select" required>
+                                <option value="">Select Payment Type</option>
+
+                                <option value="Accomodation">Accomodation</option>
+                                <option value="School Fees">School Fees</option>
+                                <option value="Acceptance">Acceptance</option>
+
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Level</label>
+                            <select name="level" class="form-select" required>
+                                <option value="">Select Level</option>
+
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="300">300</option>
+                                <option value="400">400</option>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Academic Session</label>
+                            <select name="session" class="form-select" required>
+                                <option value="">Select Session</option>
+
+                                <option value="2025/2026">2025/2026</option>
+                                <option value="2026/2027">2026/2027</option>
+                                <option value="2027/2028">2027/2028</option>
+                                <option value="2028/2029">2028/2029</option>
+                                <option value="2029/2030">2029/2030</option>
+                                <option value="2030/2031">2030/2031</option>
+                                <option value="2031/2032">2031/2032</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" value="Generate Report" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <!-- <button type="button" class="btn btn-primary">Add Fee</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="addFeeModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -364,7 +431,59 @@ foreach ($programmes as $programme) {
             </div>
         </div>
     </div>
+    <div class="modal fade" id="paymentscheduleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">View Fees Schedule</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="<?php echo site_url('staff/view_fees_schedule'); ?>">
+                        <div class="mb-3">
+                            <label class="form-label">Programme</label>
+                            <select name="programid" class="form-select" required>
+                                <option value="">Select Programme</option>
+                                <?php echo $prg; ?>
+                            </select>
+                        </div>
 
+                        <div class="mb-3">
+                            <label class="form-label">Level</label>
+                            <select name="level" class="form-select" required>
+                                <option value="">Select Level</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="300">300</option>
+                                <option value="400">400</option>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Academic Session</label>
+                            <select name="session" class="form-select" required>
+                                <option value="">Select Session</option>
+                                <option value="2025/2026">2025/2026</option>
+                                <option value="2026/2027">2026/2027</option>
+                                <option value="2027/2028">2027/2028</option>
+                                <option value="2028/2029">2028/2029</option>
+                                <option value="2029/2030">2029/2030</option>
+                                <option value="2030/2031">2030/2031</option>
+                                <option value="2031/2032">2031/2032</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" value="View Fees Schedule" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <!-- <button type="button" class="btn btn-primary">Add Fee</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- jQuery -->

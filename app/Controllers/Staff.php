@@ -92,10 +92,10 @@ class Staff extends BaseController
     {
         $paymentmodel = new Payment_model();
         $data['payments'] = $paymentmodel
-        ->join('students', 'students.user_id = payments.user_id')
-        ->orderBy('payments.created_at', 'DESC')
-        ->limit(100)
-        ->findAll();
+            ->join('students', 'students.user_id = payments.user_id')
+            ->orderBy('payments.created_at', 'DESC')
+            ->limit(100)
+            ->findAll();
         $data['programmes'] = (new Programmes_model())->findAll();
         return view('staff/bursary', $data);
     }
@@ -350,9 +350,9 @@ class Staff extends BaseController
             ->orWhere('payments.type IS NULL')
             ->groupEnd()
             ->first();
-        
 
-       // var_dump($data);exit;
+
+        // var_dump($data);exit;
 
 
         return view('staff/fetch_student', $data);
@@ -505,7 +505,7 @@ class Staff extends BaseController
     {
         $bedspacemodel = new Bedspace_model();
         $record = $bedspacemodel->where('roomid', $roomid)->findAll();
-       // var_dump($record);exit;
+        // var_dump($record);exit;
         $data['bedspaces'] = $record;
         return view('staff/view_bedspaces', $data);
     }
@@ -513,14 +513,14 @@ class Staff extends BaseController
     {
         $reservationmodel = new Reservation_model();
         $record = $reservationmodel
-        ->join('students', 'students.user_id = reservations.userid')
-        ->join('hostels', 'hostels.hostelid = reservations.hostelid')
-        ->join('rooms', 'rooms.id = reservations.roomid')
-        ->join('bedspaces', 'bedspaces.id = reservations.bedspaceid')
-        ->where('reservations.hostelid', $hostelid)
-        ->where('reservations.reservation_status', 'Pending')
-        ->findAll();
-      // var_dump($record);exit;
+            ->join('students', 'students.user_id = reservations.userid')
+            ->join('hostels', 'hostels.hostelid = reservations.hostelid')
+            ->join('rooms', 'rooms.id = reservations.roomid')
+            ->join('bedspaces', 'bedspaces.id = reservations.bedspaceid')
+            ->where('reservations.hostelid', $hostelid)
+            ->where('reservations.reservation_status', 'Pending')
+            ->findAll();
+        // var_dump($record);exit;
         $data['reservations'] = $record;
         return view('staff/pending_applicants', $data);
     }
@@ -528,14 +528,14 @@ class Staff extends BaseController
     {
         $reservationmodel = new Reservation_model();
         $record = $reservationmodel
-        ->join('students', 'students.user_id = reservations.userid')
-        ->join('hostels', 'hostels.hostelid = reservations.hostelid')
-        ->join('rooms', 'rooms.id = reservations.roomid')
-        ->join('bedspaces', 'bedspaces.id = reservations.bedspaceid')
-        ->where('reservations.hostelid', $hostelid)
-        ->where('reservations.reservation_status', 'Approved')
-        ->findAll();
-       // var_dump($record);exit;
+            ->join('students', 'students.user_id = reservations.userid')
+            ->join('hostels', 'hostels.hostelid = reservations.hostelid')
+            ->join('rooms', 'rooms.id = reservations.roomid')
+            ->join('bedspaces', 'bedspaces.id = reservations.bedspaceid')
+            ->where('reservations.hostelid', $hostelid)
+            ->where('reservations.reservation_status', 'Approved')
+            ->findAll();
+        // var_dump($record);exit;
         $data['bedspaces'] = $record;
         return view('staff/view_bedspaces', $data);
     }
@@ -543,14 +543,14 @@ class Staff extends BaseController
     {
         $reservationmodel = new Reservation_model();
         $record = $reservationmodel
-       ->join('students', 'students.user_id = reservations.userid')
-        ->join('hostels', 'hostels.hostelid = reservations.hostelid')
-        ->join('rooms', 'rooms.id = reservations.roomid')
-        ->join('bedspaces', 'bedspaces.id = reservations.bedspaceid')
-        ->where('reservations.hostelid', $hostelid)
-        ->where('reservations.reservation_status', 'Declined')
-        ->findAll();
-       // var_dump($record);exit;
+            ->join('students', 'students.user_id = reservations.userid')
+            ->join('hostels', 'hostels.hostelid = reservations.hostelid')
+            ->join('rooms', 'rooms.id = reservations.roomid')
+            ->join('bedspaces', 'bedspaces.id = reservations.bedspaceid')
+            ->where('reservations.hostelid', $hostelid)
+            ->where('reservations.reservation_status', 'Declined')
+            ->findAll();
+        // var_dump($record);exit;
         $data['bedspaces'] = $record;
         return view('staff/view_bedspaces', $data);
     }
@@ -606,10 +606,57 @@ class Staff extends BaseController
         }
         $paymentmodel = new Payment_Model();
         $paymentrecord = $paymentmodel
-        ->where('user_id', $record['user_id'])
-        ->findAll();
-        $data['student'] = $record;     
+            ->where('user_id', $record['user_id'])
+            ->findAll();
+        $data['student'] = $record;
         $data['payments'] = $paymentrecord;
         return view('staff/student_payments', $data);
+    }
+    public function generateReport()
+    {
+        $programid = $this->request->getPost('programid');
+        $level = $this->request->getPost('level');
+        $session = $this->request->getPost('session');
+        $type = $this->request->getPost('type');
+        // var_dump($programid, $level, $session); exit;
+
+        $paymentmodel = new Payment_Model();
+        $record = $paymentmodel
+            ->join('students', 'students.user_id = payments.user_id')
+            ->where('programid', $programid)
+            ->where('level', $level)
+            ->where('session', $session)
+            ->where('type', $type)
+            ->findAll();
+        $data['payments'] = $record;
+        return view('staff/payment_report', $data);
+    }
+    public function view_fees_schedule()
+    {
+        $programid = $this->request->getPost('programid');
+        $level = $this->request->getPost('level');
+        $session = $this->request->getPost('session');
+        $feemodel = new Payment_Schedule_Model();
+        $record = $feemodel
+            ->where('programid', $programid)
+            ->where('level', $level)
+            ->where('session', $session)
+            ->findAll();
+        $data['fees'] = $record;
+
+        $data['level'] = $level;
+        $data['session'] = $session;
+        $programmodel = new Programmes_model();
+        $programrecord = $programmodel->where('program_id', $programid)->first();
+        $data['program'] = $programrecord;
+        return view('staff/fees_schedule', $data);
+    }
+    public function delete_fee($id)
+    {
+        $feemodel = new Payment_Schedule_Model();
+        $record = $feemodel->where('id', $id)->first();
+        $feemodel->where('id', $id)->delete();
+        session()->setFlashdata('msg', 'Fee deleted successfully');
+        return redirect()->to(site_url('staff/bursary-manager'));
     }
 }

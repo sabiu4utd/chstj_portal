@@ -36,6 +36,7 @@ $routes->get('student/hostel_payments/(:segment)', 'Student::hostel_payments/$1'
 
 
 
+
 //Staff Routes 
 $routes->get('staff', 'Staff::index');
 $routes->get('staff/info', 'Staff::info');
@@ -64,10 +65,12 @@ $routes->get('staff/approve-reservation/(:segment)', 'Staff::approve_reservation
 $routes->get('staff/reject-reservation/(:segment)', 'Staff::reject_reservation/$1');
 $routes->post('staff/add_fee', 'Staff::add_fee');
 $routes->post('staff/verifyPayments', 'Staff::verifyPayments');
+$routes->post('staff/generateReport', 'Staff::generateReport');
+$routes->post('staff/view_fees_schedule', 'Staff::view_fees_schedule');
+$routes->get('staff/delete_fee/(:segment)', 'Staff::delete_fee/$1');
 
 
 // Admin Routes for Bedspace Management
 $routes->get('admin/bedspaces', 'Admin::viewBedspaces');
 $routes->post('admin/update-bedspace-status', 'Admin::updateBedspaceStatus');
 $routes->get('admin/get-bedspace-details/(:num)', 'Admin::getBedspaceDetails/$1');
-

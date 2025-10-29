@@ -62,6 +62,8 @@ $routes->get('staff/approved_applicants/(:segment)', 'Staff::approved_applicants
 //$routes->get('staff/declined_applicants/(:segment)', 'Staff::declined_applicants/$1');
 $routes->get('staff/approve-reservation/(:segment)', 'Staff::approve_reservation/$1');
 $routes->get('staff/reject-reservation/(:segment)', 'Staff::reject_reservation/$1');
+$routes->post('staff/add_fee', 'Staff::add_fee');
+$routes->post('staff/verifyPayments', 'Staff::verifyPayments');
 
 
 // Admin Routes for Bedspace Management

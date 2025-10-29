@@ -18,6 +18,7 @@ use App\Models\Hostel_model;
 use App\Models\Room_model;
 use App\Models\Bedspace_model;
 use App\Models\Reservation_model;
+use App\Models\Payment_Schedule_Model;
 
 use Ramsey\Uuid\Uuid;
 
@@ -95,6 +96,7 @@ class Staff extends BaseController
         ->orderBy('payments.created_at', 'DESC')
         ->limit(100)
         ->findAll();
+        $data['programmes'] = (new Programmes_model())->findAll();
         return view('staff/bursary', $data);
     }
     public function resultManager(): string
@@ -567,5 +569,47 @@ class Staff extends BaseController
         $reservationmodel->set('reservation_status', 'Declined')->where('reservation_id', $reservationid)->update();
         session()->setFlashdata('msg', 'Reservation rejected successfully');
         return redirect()->to(site_url('staff/pending_applicants/' . $record['hostelid']));
+    }
+    public function add_fee()
+    {
+        $data = [
+            'programid' => $this->request->getPost('programid'),
+            'item' => $this->request->getPost('item'),
+            'amount' => $this->request->getPost('amount'),
+            'level' => $this->request->getPost('level'),
+            'session' => $this->request->getPost('session'),
+        ];
+        $feemodel = new Payment_Schedule_Model();
+        $record = $feemodel
+            ->where('programid', $this->request->getPost('programid'))
+            ->where('item', $this->request->getPost('item'))
+            ->where('level', $this->request->getPost('level'))
+            ->where('session', $this->request->getPost('session'))
+            ->first();
+        if ($record) {
+            session()->setFlashdata('msg', 'Fee already exists');
+            return redirect()->to(site_url('staff/bursary-manager'));
+        }
+        $insert = $feemodel->insert($data);
+        if ($insert) {
+            session()->setFlashdata('msg', 'Fee added successfully');
+            return redirect()->to(site_url('staff/bursary-manager'));
+        }
+    }
+    public function verifyPayments()
+    {
+        $studentmodel = new Student_model();
+        $record = $studentmodel->where('pnumber', $this->request->getPost('pnumber'))->first();
+        if (!$record) {
+            session()->setFlashdata('msg', 'Student not found');
+            return redirect()->to(site_url('staff/bursary-manager'));
+        }
+        $paymentmodel = new Payment_Model();
+        $paymentrecord = $paymentmodel
+        ->where('user_id', $record['user_id'])
+        ->findAll();
+        $data['student'] = $record;     
+        $data['payments'] = $paymentrecord;
+        return view('staff/student_payments', $data);
     }
 }

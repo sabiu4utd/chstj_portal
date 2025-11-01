@@ -255,6 +255,7 @@ class Student extends BaseController
     }
     public function provisional_offer()
     {
+        
         return view('student/provisional_offer');
     }
     public function load_rooms()

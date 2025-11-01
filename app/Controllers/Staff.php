@@ -326,6 +326,10 @@ class Staff extends BaseController
         $query = $db->query('SELECT * FROM students WHERE pnumber =  "' . trim($_POST["pnumber"]) . '"');
         //echo $db->getLastQuery();exit;
         $record = $query->getRowArray();
+        if(!$record){
+            session()->setFlashdata('msg', 'No Record Found');
+            return redirect()->to(site_url('staff'));
+        }
         //var_dump($record);exit;
         $user_id = $record['user_id'];
 
@@ -457,7 +461,7 @@ class Staff extends BaseController
     {
         $studentmodel = new Student_model();
         $record = $studentmodel
-            ->join('departments', 'departments.deptid = students.deptid')
+            ->join('programmes', 'programmes.program_id = students.programid')
             ->where('user_id', $userid)->first();
         $data['student'] = $record;
         return view('staff/print_admission_letter', $data);

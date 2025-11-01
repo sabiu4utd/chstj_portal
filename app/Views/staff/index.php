@@ -103,6 +103,11 @@
                 <!-- Recent Activities & Quick Actions -->
                 <div class="row g-4">
                     <div class="col-md-12">
+                          <?php if(session()->getFlashdata('msg')) { ?>
+                            <div class="alert alert-danger">
+                                <?php echo session()->getFlashdata('msg'); ?>
+                            </div>
+                            <?php } ?>
                         <div class="card h-100">
                             <div class="card-header" style="text-align: center;">
                                 CENTRAL REGISTRATIONS

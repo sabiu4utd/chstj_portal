@@ -1,279 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+//var_dump($student);
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admission Letter - <?= $student['pnumber'] ?></title>
+    <title>Payment Receipt - KSCHST</title>
     <style>
-        @media print {
-            body { margin: 0; padding: 0; }
-            .no-print { display: none; }
-            @page { size: A4; margin: 15mm; }
-        }
-        
-        body {
-            font-family: 'Times New Roman', serif;
-            line-height: 1.3;
+        /* Reset CSS */
+        * {
             margin: 0;
-            padding: 8px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-            font-size: 13px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* Receipt Container */
+        .receipt-container {
+            width: 210mm;
+            /* A4 width */
+            min-height: 297mm;
+            /* A4 height */
+            margin: 0 auto;
+            background: white;
+            padding: 20mm;
             position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            background-image: url('<?= base_url('assets/img/logo.jpg') ?>');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            opacity: 0.05;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
-        .letterhead {
+
+        /* Header Styles */
+        .receipt-header {
             text-align: center;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3d6f 100%);
-            color: white;
-            padding: 10px;
-            border-radius: 6px;
-            box-shadow: 0 3px 6px rgba(44, 90, 160, 0.2);
+            border-bottom: 2px solid #1a237e;
+            padding-bottom: 20px;
         }
-        
-        .logo {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 6px;
-            border-radius: 50%;
-            border: 2px solid white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+        .school-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 10px;
         }
-        
+
         .school-name {
-            font-size: 16px;
+            font-size: 25px;
+            color: #1a237e;
+            margin-bottom: 5px;
             font-weight: bold;
-            color: white;
-            margin: 6px 0;
-            text-transform: uppercase;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
-        
+
         .school-address {
-            font-size: 10px;
-            color: rgba(255,255,255,0.9);
-            margin: 1px 0;
-        }
-        
-        .letter-content {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 5px;
-        }
-        
-        .applicant-info {
-            background: linear-gradient(135deg, #e3f2fd 0%, #f8f9fa 100%);
-            padding: 8px;
-            border-left: 3px solid #2c5aa0;
-            border-radius: 4px;
-            margin: 8px 0;
-            font-size: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .admission-title {
-            text-align: center;
             font-size: 14px;
-            font-weight: bold;
-            color: #2c5aa0;
-            margin: 12px 0;
-            padding: 6px;
-            background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
-            border-radius: 4px;
-            border: 2px solid #2c5aa0;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        /* Receipt Content */
+        .receipt-body {
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .receipt-title {
+            font-size: 20px;
+            color: #1a237e;
+            margin-bottom: 20px;
+            text-align: center;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 2px;
         }
-        
-        .letter-body {
-            text-align: justify;
-            margin: 8px 0;
-            font-size: 12px;
-            background: rgba(248, 249, 250, 0.5);
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #e9ecef;
+
+        .receipt-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
         }
-        
-        .letter-body ol {
-            padding-left: 16px;
+
+        .info-group {
+            margin-bottom: 15px;
         }
-        
-        .letter-body li {
-            margin: 6px 0;
-            padding: 3px 0;
-            border-bottom: 1px dotted #dee2e6;
+
+        .info-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 14px;
         }
-        
-        .letter-body li:last-child {
-            border-bottom: none;
+
+        .info-value {
+            font-size: 16px;
+            color: #333;
+            margin-top: 5px;
         }
-        
-        .signature-section {
-            margin-top: 15px;
-            text-align: right;
-            font-size: 12px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 10px;
-            border-radius: 4px;
-            border-left: 3px solid #2c5aa0;
+
+        .amount-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
         }
-        
+
+        .amount {
+            font-size: 24px;
+            color: #1a237e;
+            font-weight: bold;
+        }
+
+        /* QR Code Section */
         .qr-section {
             text-align: center;
-            margin-top: 10px;
-            padding: 8px;
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            border-radius: 6px;
-            border: 2px dashed #2c5aa0;
+            margin-top: 30px;
         }
-        
+
         .qr-code {
-            width: 60px;
-            height: 60px;
-            border: 2px solid #2c5aa0;
-            border-radius: 4px;
-            box-shadow: 0 2px 6px rgba(44, 90, 160, 0.2);
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
         }
-        
-        .print-btn {
+
+        .reference {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Footer */
+        .receipt-footer {
+            text-align: center;
+            margin-top: 5x;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .receipt-container {
+                box-shadow: none;
+                padding: 15mm;
+            }
+
+            @page {
+                size: A4;
+                margin: 0;
+            }
+        }
+
+        /* No Break Inside Elements */
+        .receipt-header,
+        .receipt-body,
+        .receipt-footer {
+            break-inside: avoid;
+        }
+
+        /* Print Button */
+        .print-button {
             position: fixed;
-            top: 20px;
+            bottom: 20px;
             right: 20px;
-            background: #2c5aa0;
-            color: white;
             padding: 10px 20px;
+            background: #1a237e;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
+            display: none;
         }
-        
-        .print-btn:hover {
-            background: #1e3d6f;
-        }
-        
-        .date-section {
-            text-align: right;
-            margin: 6px 0;
-            font-weight: bold;
-            font-size: 12px;
-        }
-        
-        .date-box {
-            background: linear-gradient(135deg, #fff3e0 0%, #ffffff 100%);
-            padding: 6px 10px;
-            border-radius: 15px;
-            border: 1px solid #ffcc80;
-            display: inline-block;
+
+        @media screen {
+            .print-button {
+                display: block;
+            }
         }
     </style>
 </head>
+
 <body>
-    <button class="print-btn no-print" onclick="window.print()">🖨️ Print Letter</button>
-    
-    <div class="letter-content">
-        <!-- Letterhead -->
-        <div class="letterhead">
-            <img src="<?= base_url('assets/img/logo.jpg') ?>" alt="School Logo" class="logo">
-            <div class="school-name">College of Health Sciences and Technology Jega</div>
-            <div class="school-address">P.M.B 1015, Jega, Kebbi State, Nigeria</div>
-            <div class="school-address">Tel: +234-XXX-XXXX-XXX | Email: info@chstjega.edu.ng</div>
-        </div>
-        
-        
-        <!-- Applicant Information -->
-        <div class="applicant-info">
-            <strong>Name of Applicant:</strong> <?= strtoupper($student['surname'] . ' ' . $student['firstname'] . ' ' . $student['othername']) ?><br>
-            <strong>ADMISSION No:</strong> <?= $student['pnumber'] ?><br>
-        </div>
-        
-        <div class="date-section">
-            <span class="date-box">Date: <?= date('d/m/Y') ?></span>
-        </div>
-        
-        <!-- Letter Title -->
-        <div class="admission-title">
-            CONFIRMATION OF ADMISSION <?= date('Y') ?>/<?= date('Y') + 1 ?> ACADEMIC SESSION
-        </div>
-        
-        <!-- Letter Body -->
-        <div class="letter-body">
-            <ol>
-                <li>
-                    I am pleased to inform you that your provisional admission has been confirmed into the 
-                    <strong>Department of <?= strtoupper($student['dept_name']) ?></strong> to pursue a three (3) year program 
-                    leading to the award of <strong>Diploma in <?= strtoupper($student['dept_name']) ?></strong> 
-                    with admission number <strong><?= $student['pnumber'] ?></strong>
-                </li>
-                
-                <li>
-                    You are required to possess at least the minimum entry qualification and other admission 
-                    requirements to enable you register for this program.
-                </li>
-                
-                <li>
-                    If at any time during your study, it is discovered that you provided false information 
-                    to obtain this admission during the registration you will be required to withdraw from the college.
-                </li>
-                
-                <li>
-                    Information relating to schedule of registration fees and acceptance of this provisional 
-                    admission is enclosed herewith.
-                </li>
-                
-                <li>
-                    Please accept my congratulations.
-                </li>
-            </ol>
-        </div>
-        
-        <!-- Signature Section -->
-        <div class="signature-section">
-            <div style="margin-top: 30px;">
-                <strong>Bilyaminu Danjuma</strong><br>
-                Ag. Registrar<br>
-                College of Health Sciences and Technology Jega
+    <div class="receipt-container">
+        <div class="receipt-header">
+            <img src="<?php echo base_url('assets/img/logo.jpg'); ?>" alt="KSCHST Logo" class="school-logo">
+            <h4 style="text-align: center;">KEBBI STATE COLLEGE OF HEALTH SCIENCES AND TECHNOLOGY, JEGA</h4>
+            <h4 style="text-align: center;">OFFICE OF THE REGISTRA, ADMISSIONS UNIT</h4>
+            <div>
+                <p>P.M.B. 2028 Jega, Kebbi State, Nigeria</p>
+                 <p >Email: info@chstj.edu.ng | Website: www.chstj.edu.ng</p>
             </div>
+           
         </div>
         
-        <!-- QR Code Section -->
-        <div class="qr-section">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=60x60&data=<?= urlencode($student['pnumber']) ?>" 
-                 alt="QR Code" class="qr-code">
-            <div style="font-size: 8px; margin-top: 2px;">Admission QR: <?= $student['pnumber'] ?></div>
+
+        <div class="receipt-body">
+            <table style="font-weight: bold;">
+                <tr>
+                    <td>Student Name:</td>
+                    <td><?php echo $student['firstname'] . ' ' . $student['surname'] . ' ' . $student['othername']; ?></td>
+                </tr>
+                <tr>
+                    <td>Application No:</td>
+                    <td><?php echo $student['pnumber']; ?></td>
+                </tr>
+            </table>
+
+            <br />
+
+
+            <h4 style="text-align:center">CONFIRMATION OF ADMISSION <?php echo $student['session_admitted']; ?> ACADEMIC SESSION</h4> <br />
+            <p style="text-align:justify">
+                I am pleased to inform you that your provisional admission has been confirmed into the Department of Community Health to pursue a three (3) year program leading to the award of a Diploma in <?php echo $student['program']; ?>.Your admission number is: <?php echo $student['pnumber']; ?>. <br />
+                2. You are required to possess at least the minimum entry qualifications and meet all other admission requirements before registration for this program. <br />
+                3. If at any time during your study it is discovered that you provided false or misleading information to obtain this admission, you will be required to withdraw from the College. <br />
+                4. Please accept my congratulations on your successful confirmation of admission. <br />
+                5. Thank you.
+            </p>
+
+
+            <div class="qr-section">
+                <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?php echo urlencode($student['firstname']); ?>"
+                    alt="Transaction QR Code"
+                    class="qr-code" style="width: 50px; height: 50px;">
+                <div class="reference">
+                    <br />
+                    <br />
+                    <p style="font-size:15pt">
+                       
+                        Bilyaminu Danjuma <br />
+                        Registrar
+                        .</p>
+                    <!-- <p>For any queries, please contact the Bursary Department.</p>  -->
+                    <!-- <p>&copy; <?php echo date('Y'); ?> KSCHST. All rights reserved.</p> -->
+                </div>
+            </div>
+
+            <!-- <div class="receipt-footer" style="margin-top: -10px;">
+            <p>This is a computer-generated receipt and requires no signature.</p>
+            <p>For any queries, please contact the Bursary Department.</p>
+            <p>&copy; <?php echo date('Y'); ?> KSCHST. All rights reserved.</p>
+        </div> -->
         </div>
-        
-        <!-- Footer -->
-        <div style="margin-top: 8px; text-align: center; font-size: 9px; color: #666; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 6px; border-radius: 4px; border-top: 2px solid #2c5aa0;">
-            <p style="margin: 1px 0;"><em>✓ This is an official document of College of Health Sciences and Technology Jega</em></p>
-            <p style="margin: 1px 0;">📅 Generated on <?= date('d/m/Y H:i:s') ?></p>
-        </div>
-    </div>
-    
-    <script>
-        // Auto-focus for printing
-        window.onload = function() {
-            // Optional: Auto-print when page loads (uncomment if needed)
-            // window.print();
-        }
-    </script>
+
+        <button onclick="window.print()" class="print-button">
+            Print Admission Letter
+        </button>
 </body>
+
 </html>

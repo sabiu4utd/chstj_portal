@@ -1,93 +1,264 @@
-<!DOCTYPE html>
+ <p style="text-align:left; font-we">Email: info@chstj.edu.ng</p>
+            <p style="text-align:left">Website: www.chstj.edu.ng</p><!DOCTYPE html>
 <html lang="en">
+<?php
+//var_dump($student);
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Provisional Offer of Admission</title>
+    <title>Payment Receipt - KSCHST</title>
     <style>
-        @media print { .no-print { display: none; } @page { size: A4; margin: 20mm; } }
-        body { background: #ffffff; color: #000; font-family: 'Times New Roman', serif; font-size: 16px; line-height: 1.5; margin: 0; padding: 16px; }
-        .page { max-width: 800px; margin: 0 auto; }
-        h1 { font-size: 18px; text-align: center; margin: 0 0 8px; }
-        h2 { font-size: 16px; text-align: center; margin: 0 0 16px; }
-        .muted { color: #000; font-size: 12px; text-align: center; margin-bottom: 16px; }
-        .info { margin: 16px 0; }
-        .date { text-align: right; margin: 8px 0 16px; }
-        ol { margin: 8px 0 0 18px; }
-        .signature { margin-top: 28px; text-align: right; }
-        .qr { text-align: center; margin-top: 16px; }
-        .qr img { width: 70px; height: 70px; }
-        .print-btn { margin-bottom: 12px; }
-        a { color: #000; text-decoration: underline; }
-        hr { border: none; border-top: 1px solid #000; margin: 12px 0; }
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* Receipt Container */
+        .receipt-container {
+            width: 210mm;
+            /* A4 width */
+            min-height: 297mm;
+            /* A4 height */
+            margin: 0 auto;
+            background: white;
+            padding: 20mm;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header Styles */
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #1a237e;
+            padding-bottom: 20px;
+        }
+
+        .school-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .school-name {
+            font-size: 25px;
+            color: #1a237e;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .school-address {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        /* Receipt Content */
+        .receipt-body {
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .receipt-title {
+            font-size: 20px;
+            color: #1a237e;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .receipt-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-group {
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #333;
+            margin-top: 5px;
+        }
+
+        .amount-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .amount {
+            font-size: 24px;
+            color: #1a237e;
+            font-weight: bold;
+        }
+
+        /* QR Code Section */
+        .qr-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .qr-code {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        .reference {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Footer */
+        .receipt-footer {
+            text-align: center;
+            margin-top: 5x;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .receipt-container {
+                box-shadow: none;
+                padding: 15mm;
+            }
+
+            @page {
+                size: A4;
+                margin: 0;
+            }
+        }
+
+        /* No Break Inside Elements */
+        .receipt-header,
+        .receipt-body,
+        .receipt-footer {
+            break-inside: avoid;
+        }
+
+        /* Print Button */
+        .print-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: #1a237e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+
+        @media screen {
+            .print-button {
+                display: block;
+            }
+        }
     </style>
 </head>
+
 <body>
-<?php
-    $firstname   = $_SESSION['firstname'] ?? '';
-    $surname     = $_SESSION['surname'] ?? '';
-    $othername   = $_SESSION['othername'] ?? '';
-    $deptName    = $_SESSION['dept_name'] ?? '';
-    $pnumber     = (!empty($_SESSION['pnumber'])) ? $_SESSION['pnumber'] : 'Pending';
-    $uniqueID    = $_SESSION['uniqueID'] ?? '';
-    $sessionText = $_SESSION['current_session'] ?? (date('Y') . '/' . (date('Y') + 1));
-    $fullName    = trim($surname . ' ' . $firstname . ' ' . $othername);
-    $qrData      = ($pnumber !== 'Pending') ? $pnumber : $uniqueID;
-?>
-<div class="page">
-    <div class="no-print print-btn">
-        <button onclick="window.print()">Print</button>
-        &nbsp;|&nbsp;
-        <a href="<?= site_url('student/payments') ?>">Go to Payments</a>
-    </div>
-    <div class="header-logo" style="text-align:center">
-        <img src="<?= base_url('assets/img/logo.jpg') ?>" alt="School Logo">
-    </div>
-    <h1>College of Health Sciences and Technology Jega</h1>
-    <div class="muted">P.M.B 1015, Jega, Kebbi State , Nigeria • Email: info@chstjega.edu.ng</div>
-    <hr>
-
-    <h2>Provisional Offer of Admission (<?= htmlspecialchars($sessionText) ?> Academic Session)</h2>
-
-    <div class="info">
-        <div><strong>Name of Applicant:</strong> <?= strtoupper(htmlspecialchars($fullName)) ?></div>
-        <div><strong>Admission No:</strong> <?= htmlspecialchars($pnumber) ?></div>
-        <div><strong>Department:</strong> <?= strtoupper(htmlspecialchars($deptName)) ?></div>
-    </div>
-
-    <div class="date">
-        Date: <?= date('d/m/Y') ?>
-    </div>
-
-    <p>
-        We are pleased to offer you provisional admission into the
-        <strong><?= strtoupper(htmlspecialchars($deptName)) ?></strong> to pursue a program at the College,
-        subject to the fulfillment of the conditions below.
-    </p>
-
-    <ol>
-        <li>Present the minimum entry qualifications and other admission requirements during screening and registration.</li>
-        <li>Pay the Acceptance Fee and other prescribed fees within the stipulated period to confirm this offer.</li>
-        <li>Provide originals and photocopies of credentials for verification (O'Level results, Birth Certificate/Declaration of Age, State/LGA of Origin, etc.).</li>
-        <li>This offer may be withdrawn if false information is discovered or if registration is not completed within the given timeline.</li>
-        <li>Please accept our congratulations and best wishes for your academic journey at the College.</li>
-    </ol>
-
-    <div class="signature">
-        <div style="margin-top: 32px;">
-            <strong>Bilyaminu Danjuma</strong><br>
-            Ag. Registrar<br>
-            College of Health Sciences and Technology Jega
+    <div class="receipt-container">
+        <div class="receipt-header">
+            <img src="<?php echo base_url('assets/img/logo.jpg'); ?>" alt="KSCHST Logo" class="school-logo">
+            <h4 style="text-align: center;">KEBBI STATE COLLEGE OF HEALTH SCIENCES AND TECHNOLOGY, JEGA</h4>
+            <h4 style="text-align: center;">OFFICE OF THE REGISTRA, ADMISSIONS UNIT</h4>
+            <div>
+                <p>P.M.B. 2028 Jega, Kebbi State, Nigeria</p>
+                 <p >Email: info@chstj.edu.ng | Website: www.chstj.edu.ng</p>
+            </div>
+           
         </div>
-    </div>
+        
 
-    <div class="qr">
-        <?php if (!empty($qrData)) { ?>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=<?= urlencode($qrData) ?>" alt="QR Code">
-            <div style="font-size: 11px;">Reference: <?= htmlspecialchars($qrData) ?></div>
-        <?php } ?>
-    </div>
-</div>
+        <div class="receipt-body">
+            <table style="font-weight: bold;">
+                <tr>
+                    <td>Student Name:</td>
+                    <td><?php echo $_SESSION['firstname'] . ' ' . $_SESSION['surname'] . ' ' . $_SESSION['othername']; ?></td>
+                </tr>
+                <tr>
+                    <td>Application No:</td>
+                    <td><?php echo $_SESSION['pnumber']; ?></td>
+                </tr>
+            </table>
 
+            <br />
+ <h4 style="text-align:center">PROVISIONAL OFFER OF ADMISSION <?php echo $_SESSION['session_admitted']; ?> ACADEMIC SESSION</h4> <br />
+        <p style="text-align:justify">
+             I am pleased to inform you that you have been offered provisional admission into the Department of <?php echo $_SESSION['dept_name']; ?> to pursue a three (3) year program leading to the award of a Diploma in <?php echo $_SESSION['program']; ?>.<BR /> 
+1. Information relating to the schedule of registration fees and procedures for acceptance of this provisional admission is enclosed herewith.<BR /> 
+3. You are required to possess at least the minimum entry qualifications and meet all other admission requirements before registration for this program.<BR /> 
+4. If at any time during your study it is discovered that you provided false or misleading information to obtain this admission, you will be required to withdraw from the College.<BR /> 
+5. Please accept my congratulations on your successful admission.
+
+        </p>
+          
+
+
+
+            <div class="qr-section">
+                <img
+                    src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?php echo urlencode($_SESSION['firstname']); ?>"
+                    alt="Transaction QR Code"
+                    class="qr-code" style="width: 50px; height: 50px;">
+                <div class="reference">
+                    <br />
+                    <br />
+                    <p style="font-size:15pt">
+                       
+                        Bilyaminu Danjuma <br />
+                        Registrar
+                        .</p>
+                    <!-- <p>For any queries, please contact the Bursary Department.</p>  -->
+                    <!-- <p>&copy; <?php echo date('Y'); ?> KSCHST. All rights reserved.</p> -->
+                </div>
+            </div>
+
+            <!-- <div class="receipt-footer" style="margin-top: -10px;">
+            <p>This is a computer-generated receipt and requires no signature.</p>
+            <p>For any queries, please contact the Bursary Department.</p>
+            <p>&copy; <?php echo date('Y'); ?> KSCHST. All rights reserved.</p>
+        </div> -->
+        </div>
+
+        <button onclick="window.print()" class="print-button">
+            Print Admission Letter
+        </button>
 </body>
+
 </html>

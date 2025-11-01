@@ -96,23 +96,23 @@ class Student extends BaseController
         //current reservation
         $reservation_model = new Reservation_model();
         $current_reservation = $reservation_model
-        ->join('hostels', 'reservations.hostelid = hostels.hostelid')
-        ->join('rooms', 'reservations.roomid = rooms.id')
-        ->join('bedspaces', 'reservations.bedspaceid = bedspaces.id')
-        ->where('userid', $_SESSION['userid'])
-        ->where('session', $_SESSION['current_session'])
-        ->first();
-//       
+            ->join('hostels', 'reservations.hostelid = hostels.hostelid')
+            ->join('rooms', 'reservations.roomid = rooms.id')
+            ->join('bedspaces', 'reservations.bedspaceid = bedspaces.id')
+            ->where('userid', $_SESSION['userid'])
+            ->where('session', $_SESSION['current_session'])
+            ->first();
+        //       
         //Reservation history
-        
+
         $reservation_model = new Reservation_model();
         $reservation_history = $reservation_model
-        ->join('hostels', 'reservations.hostelid = hostels.hostelid')
-        ->join('rooms', 'reservations.roomid = rooms.id')
-        ->join('bedspaces', 'reservations.bedspaceid = bedspaces.id')
-        ->where('userid', $_SESSION['userid'])
-        ->findAll();
-       // var_dump($reservation_history);exit;
+            ->join('hostels', 'reservations.hostelid = hostels.hostelid')
+            ->join('rooms', 'reservations.roomid = rooms.id')
+            ->join('bedspaces', 'reservations.bedspaceid = bedspaces.id')
+            ->where('userid', $_SESSION['userid'])
+            ->findAll();
+        // var_dump($reservation_history);exit;
 
 
         $gender = $this->session->get('gender');
@@ -143,7 +143,18 @@ class Student extends BaseController
             'session' => $this->session->get('current_session'),
             'status' => 'Paid',
         ]);
-        if ($insert) {
+        if (!$insert) {
+
+            $acce = new Payment_model();
+            $acceptance = $acce
+                ->where('user_id', $this->session->get('userid'))
+                ->where('type', 'Acceptance')
+                ->first();
+                //var_dump($acceptance);exit;
+            if ($acceptance) {
+                echo $_SESSION['acceptance_payment_status'] = 'paid';
+            }
+
             echo "Payment recorded successfully.";
         } else {
             echo "Failed to record payment.";
@@ -151,7 +162,7 @@ class Student extends BaseController
         return redirect('student/payments')->with('success', 'Payment processed successfully.');
         //return view('student/process_payments');
     }
- public function hostel_payments($transaction_reference)
+    public function hostel_payments($transaction_reference)
     {
         // echo $transaction_reference; EXIT;
         $paymentModel = new Payment_model();
@@ -246,23 +257,23 @@ class Student extends BaseController
     {
         $course_registration_model = new Course_registration_model();
         $courses = $course_registration_model
-                ->join('courses', 'courses.id = course_registration.csid')
-                ->where('studentid', $_SESSION['userid'])
-                ->where('course_registration.level', $level)
-                ->findAll();
+            ->join('courses', 'courses.id = course_registration.csid')
+            ->where('studentid', $_SESSION['userid'])
+            ->where('course_registration.level', $level)
+            ->findAll();
         //var_dump($courses);exit;
         return view('student/print_registration', ['courses' => $courses]);
     }
     public function provisional_offer()
     {
-        
+
         return view('student/provisional_offer');
     }
     public function load_rooms()
     {
         $hostelid = $this->request->getPost('hostelid');
         $model = new room_model();
-        $rooms = $model->where('hostelid', $hostelid)->findAll(); 
+        $rooms = $model->where('hostelid', $hostelid)->findAll();
         // Return the result as JSON  
         return $this->response->setJSON($rooms);
     }
@@ -271,9 +282,9 @@ class Student extends BaseController
         $roomid = $this->request->getPost('roomid');
         $model = new Bedspace_model();
         $bedspaces = $model
-        ->where('roomid', $roomid)
-        ->where('status', 'available')
-        ->findAll(); 
+            ->where('roomid', $roomid)
+            ->where('status', 'available')
+            ->findAll();
         // Return the result as JSON  
         return $this->response->setJSON($bedspaces);
     }
@@ -285,9 +296,9 @@ class Student extends BaseController
         $userid = $this->session->get('userid');
         $session = $this->session->get('current_session');
         $level = $this->session->get('current_level');
-       
-        
-        
+
+
+
         $model = new Reservation_model();
         $insert = $model->insert([
             //'id' => Uuid::uuid4()->toString(),
@@ -306,31 +317,30 @@ class Student extends BaseController
         } else {
             return redirect('student/accomodations')->with('msg', 'Failed to make reservation.');
         }
-      
     }
     public function hostel()
     {
         $reservation_model = new Reservation_model();
         $current_reservation = $reservation_model
-        ->join('hostels', 'reservations.hostelid = hostels.hostelid')
-        ->join('rooms', 'reservations.roomid = rooms.id')
-        ->join('bedspaces', 'reservations.bedspaceid = bedspaces.id')
-        ->where('userid', $_SESSION['userid'])
-        ->where('session', $_SESSION['current_session'])
-        ->first();
-//       
+            ->join('hostels', 'reservations.hostelid = hostels.hostelid')
+            ->join('rooms', 'reservations.roomid = rooms.id')
+            ->join('bedspaces', 'reservations.bedspaceid = bedspaces.id')
+            ->where('userid', $_SESSION['userid'])
+            ->where('session', $_SESSION['current_session'])
+            ->first();
+        //       
         //Reservation history
-        
+
         $reservation_model = new Reservation_model();
         $reservation_history = $reservation_model
-        ->join('hostels', 'reservations.hostelid = hostels.hostelid')
-        ->join('rooms', 'reservations.roomid = rooms.id')
-        ->join('bedspaces', 'reservations.bedspaceid = bedspaces.id')
-        ->where('userid', $_SESSION['userid'])
-        ->findAll();
+            ->join('hostels', 'reservations.hostelid = hostels.hostelid')
+            ->join('rooms', 'reservations.roomid = rooms.id')
+            ->join('bedspaces', 'reservations.bedspaceid = bedspaces.id')
+            ->where('userid', $_SESSION['userid'])
+            ->findAll();
 
-       $bedspace_model = new Bed_spaces_model();
-        $sql ="select distinct hostel from bed_spaces";
+        $bedspace_model = new Bed_spaces_model();
+        $sql = "select distinct hostel from bed_spaces";
         $bedspaces = $bedspace_model->query($sql)->getResultArray();
         //var_dump($bedspaces);exit;
         return view('student/hostel', ['bedspaces' => $bedspaces, 'current_reservation' => $current_reservation, 'reservation_history' => $reservation_history]);
@@ -339,10 +349,9 @@ class Student extends BaseController
     {
         $db = \Config\Database::connect();
         $hostel = $this->request->getPost('hostel');
-       $sql = "select * from bed_spaces where hostel = $hostel";
-      
+        $sql = "select * from bed_spaces where hostel = $hostel";
+
         $bedspaces = $db->query($sql)->getResultArray();
         return view('student/hostel', ['bedspaces' => $bedspaces]);
     }
-   
 }

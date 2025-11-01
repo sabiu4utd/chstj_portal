@@ -31,7 +31,7 @@
                 <a class="nav-link" href="<?php echo site_url('student/forms'); ?>">
                     <i class="fas fa-file-alt me-2"></i> Forms
                 </a>
-                <?php if ($_SESSION['uniqueID'] == 'Unassigned' ) { ?>
+                <?php if ($_SESSION['uniqueID'] == 'Unassigned' && isset($_SESSION['acceptance_payment_status'])) { ?>
                 <a class="nav-link" href="<?php echo site_url('provisional_offer'); ?>">
                     <i class="fas fa-file-alt me-2"></i> Provisional Offer
                 </a>

@@ -12,6 +12,7 @@ use App\Models\Hostel_model;
 use App\Models\Programmes_model;
 use App\Models\State_model;
 use App\Models\Lgas_model;
+use App\Models\Payment_model;
 
 class Auth extends BaseController
 {
@@ -63,8 +64,8 @@ class Auth extends BaseController
             $state = $stateModel->where('stateid', $user['stateid'])->first();
             $_SESSION['state_name'] = $state['state_name'];
             $lgaModel = new Lgas_model();
-            // $lga = $lgaModel->where('id', $user['lgaid'])->first();
-            // $_SESSION['lga_name'] = $lga['lga_name'];
+           
+           
           
         }
 
@@ -125,6 +126,9 @@ class Auth extends BaseController
     }
     public function logout()
     {
+        //session destroy
+        $this->session->destroy();
+
         return redirect("/")->with('error', 'Invalid username or password.');
     }
 }

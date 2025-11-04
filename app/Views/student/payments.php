@@ -9,9 +9,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="../assets/css/style.css" rel="stylesheet">
+    <!-- Responsive CSS -->
+    <link href="../assets/css/responsive.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://js.paystack.co/v2/inline.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 
 <body>
@@ -49,7 +52,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-hover">
+                                    <table class="table table-hover table-mobile">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -64,13 +67,13 @@
                                         <tbody>
                                             <?php foreach ($history as $key => $value) { ?>
                                                 <tr>
-                                                    <td><?php echo $key + 1; ?></td>
-                                                    <td><?php echo $value['created_at']; ?></td>
-                                                    <td><?php echo $value['type']; ?></td>
-                                                    <td><?php echo $value['transaction_reference']; ?></td>
-                                                    <td>₦<?php echo number_format($value['amount']); ?></td>
-                                                    <td><span class="badge bg-success"><?php echo $value['status']; ?></span></td>
-                                                    <td>
+                                                    <td data-label="#"><?php echo $key + 1; ?></td>
+                                                    <td data-label="Date"><?php echo $value['created_at']; ?></td>
+                                                    <td data-label="Description"><?php echo $value['type']; ?></td>
+                                                    <td data-label="Reference"><?php echo $value['transaction_reference']; ?></td>
+                                                    <td data-label="Amount">₦<?php echo number_format($value['amount']); ?></td>
+                                                    <td data-label="Status"><span class="badge bg-success"><?php echo $value['status']; ?></span></td>
+                                                    <td data-label="Actions">
                                                         <a href="receipt/<?php echo $value['payment_id'] ?>" class="btn btn-primary btn-sm">Print Receipt</a>
                                                     </td>
                                                 </tr>
@@ -87,30 +90,42 @@
                                             <?php } ?>
 
                                             <tr>
-                                                <td colspan="3">
-                                                    <?php if ($acceptance_fee) { ?>
-                                                        <!-- <span class="badge bg-success">Paid</span> -->
-                                                    <?php } else { ?>
-                                                        <form id="paymentForm">
-                                                            <input type="hidden" id="email" value="<?php echo $_SESSION['email']; ?>" placeholder="Enter your email" required />
-                                                            <input type="hidden" id="amount" value="2000" placeholder="Enter amount" required />
-                                                            <button type="button" onclick="payWithPaystack()" class="btn btn-primary">Click to the sume of ₦2000 for Pay Acceptance</button>
-                                                        </form>
-                                                    <?php } ?>
+                                                <td colspan="7">
+                                                    <div class="row g-2">
+                                                        <div class="col-12 col-md-6">
+                                                            <?php if ($acceptance_fee) { ?>
+                                                                <div class="alert alert-success mb-0">
+                                                                    <i class="fas fa-check-circle me-2"></i> Acceptance Fee Paid
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                <form id="paymentForm">
+                                                                    <input type="hidden" id="email" value="<?php echo $_SESSION['email']; ?>" placeholder="Enter your email" required />
+                                                                    <input type="hidden" id="amount" value="2000" placeholder="Enter amount" required />
+                                                                    <button type="button" onclick="payWithPaystack()" class="btn btn-primary w-100">
+                                                                        <i class="fas fa-credit-card me-2"></i>
+                                                                        Pay Acceptance Fee (₦2,000)
+                                                                    </button>
+                                                                </form>
+                                                            <?php } ?>
+                                                        </div>
+                                                        <div class="col-12 col-md-6">
+                                                            <?php if ($session_payment) { ?>
+                                                                <div class="alert alert-success mb-0">
+                                                                    <i class="fas fa-check-circle me-2"></i> School Fees Paid
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                <form id="paymentForm">
+                                                                    <input type="hidden" id="email1" value="<?php echo $_SESSION['email']; ?>" placeholder="Enter your email" required />
+                                                                    <input type="hidden" id="amount1" value="<?php echo $tution_fees; ?>" placeholder="Enter amount" required />
+                                                                    <button type="button" onclick="payWithPaystack1()" class="btn btn-primary w-100">
+                                                                        <i class="fas fa-credit-card me-2"></i>
+                                                                        Pay School Fees (₦<?php echo number_format($tution_fees); ?>)
+                                                                    </button>
+                                                                </form>
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
                                                 </td>
-                                                <td colspan="3">
-                                                    <?php if ($session_payment) { ?>
-                                                        <!-- <span class="badge bg-success">Paid</span> -->
-                                                    <?php } else { ?>
-                                                        <form id="paymentForm">
-                                                            <input type="hidden" id="email1" value="<?php echo $_SESSION['email']; ?>" placeholder="Enter your email" required />
-                                                            <input type="hidden" id="amount1" value="<?php echo $tution_fees; ?>" placeholder="Enter amount" required />
-                                                            <button type="button" onclick="payWithPaystack1()" class="btn btn-primary">Click to Pay the sum of ₦<?php echo $tution_fees; ?> for School Fees </button>
-                                                        </form>
-                                                    <?php } ?>
-                                                    </td>
-
-                                                
                                             </tr>
 
                                         </tbody>

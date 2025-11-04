@@ -1,0 +1,259 @@
+/* Bursary Manager Styles */
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem;
+}
+
+.stats-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stats-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.stats-icon i {
+    font-size: 1.25rem;
+    color: white;
+}
+
+.stats-info h6 {
+    color: #6c757d;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.stats-info h4 {
+    color: #212529;
+    margin: 0;
+    font-weight: 600;
+}
+
+/* Quick Actions */
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem;
+}
+
+.action-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.action-button:hover {
+    transform: translateY(-2px);
+}
+
+.action-button i {
+    font-size: 1.5rem;
+    color: #0d6efd;
+}
+
+.action-button span {
+    color: #495057;
+    font-weight: 500;
+}
+
+/* Forms and Modals */
+.form-grid {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #495057;
+}
+
+.form-control,
+.form-select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+/* Verification Section */
+.verification-section {
+    margin: 1.5rem;
+}
+
+.search-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Payments Section */
+.payments-section {
+    margin: 1.5rem;
+}
+
+.table-wrapper {
+    background: white;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .stats-grid,
+    .quick-actions-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        margin: 1rem;
+    }
+
+    .stats-card {
+        padding: 1rem;
+    }
+
+    .stats-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    .verification-section,
+    .payments-section {
+        margin: 1rem;
+    }
+
+    .search-group {
+        flex-direction: column;
+    }
+
+    .search-group .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .table-responsive {
+        margin: 0 -1rem;
+    }
+
+    .table td {
+        white-space: nowrap;
+    }
+
+    .action-buttons {
+        flex-wrap: wrap;
+    }
+
+    .action-buttons .btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem 0.75rem;
+    }
+
+    .stats-info h6 {
+        font-size: 0.75rem;
+    }
+
+    .stats-info h4 {
+        font-size: 1.25rem;
+    }
+
+    .quick-actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .action-button {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 0.75rem;
+    }
+
+    .action-button i {
+        font-size: 1.25rem;
+        width: 24px;
+    }
+}
+
+/* Modal Styles */
+.modal-dialog-scrollable {
+    max-height: calc(100vh - 3.5rem);
+}
+
+.modal-dialog-scrollable .modal-content {
+    max-height: 100%;
+}
+
+.modal-dialog-scrollable .modal-body {
+    overflow-y: auto;
+}

@@ -13,26 +13,45 @@ use App\Models\Room_model;
 use App\Models\Bedspace_model;
 use App\Models\Reservation_model;
 use App\Models\Bed_spaces_model;
+use App\Models\Auth_model;
 
 use Ramsey\Uuid\Uuid;
 
 class Student extends BaseController
 {
+    protected $session;
+
+    public function __construct()
+    {
+        $this->session = \Config\Services::session();
+    }
+
     public function index()
     {
-
         $settingmodel = new Settings_model();
         $active_session = $settingmodel->where('status', 'active')->where('setting', 'SESSION')->first();
         $active_semester = $settingmodel->where('status', 'active')->where('setting', 'SEMESTER')->first();
         $this->session->set('current_session', $active_session['value']);
         $this->session->set('current_semester', $active_semester['value']);
 
-        return view('student/dashboard');
+        $data = [
+            'title' => 'Student Dashboard',
+            'additional_css' => [],
+            'additional_js' => []
+        ];
+        
+        return view_with_mobile_support('student/dashboard', $data);
     }
     public function info()
     {
-        return view('student/information');
+        $data = [
+            'title' => 'My Information',
+            'additional_css' => [],
+            'additional_js' => []
+        ];
+        return view_with_mobile_support('student/information', $data);
     }
+
     public function payments()
     {
         $payment_history = new Payment_model();
@@ -46,7 +65,6 @@ class Student extends BaseController
             ->findAll();
         $tution_fees = array_sum(array_column($amount, 'amount'));
 
-
         $acceptance_fee = $payment_history
             ->where('user_id', $this->session->get('userid'))
             ->where('type', 'Acceptance')
@@ -57,8 +75,19 @@ class Student extends BaseController
             ->where('type', 'School Fees')
             ->where('session', $this->session->get('current_session'))
             ->first();
-        // var_dump($this->session->get('email'));exit;
-        return view('student/payments', ['tution_fees' => $tution_fees, 'amount' => $amount, 'history' => $history, 'acceptance_fee' => $acceptance_fee, 'session_payment' => $session_payment]);
+
+        $data = [
+            'title' => 'My Payments',
+            'additional_css' => [],
+            'additional_js' => [base_url('assets/js/payment.js')],
+            'tution_fees' => $tution_fees,
+            'amount' => $amount,
+            'history' => $history,
+            'acceptance_fee' => $acceptance_fee,
+            'session_payment' => $session_payment
+        ];
+
+        return view_with_mobile_support('student/payments', $data);
     }
     public function courses()
     {
@@ -67,32 +96,42 @@ class Student extends BaseController
         $programid = $this->session->get('programid');
         $level = $this->session->get('current_level');
 
-
-        //$level = $this->session->get('current_level');
-
         $courses_registered_sql = "SELECT DISTINCT level FROM course_registration WHERE studentid = ? order by level";
         $db = \Config\Database::connect();
         $query = $db->query($courses_registered_sql, $_SESSION['userid']);
         $courses_registered = $query->getResultArray();
-        //var_dump($courses_registered);exit;
 
         $course_registration_model = new Course_registration_model();
         $current_coureReg = $course_registration_model
             ->where('studentid', $_SESSION['userid'])
             ->where('level', $level)->first();
-        //var_dump($current_coureReg);exit;
 
         $coursemodel = new Course_model();
         $courses = $coursemodel->where('session', $session['id'])->where('deptid', $programid)->where('level', $level)->findAll();
-        return view('student/courses', ['courses' => $courses, 'courses_registered' => $courses_registered, 'current_coureReg' => $current_coureReg]);
+        
+        $data = [
+            'title' => 'My Courses',
+            'additional_css' => [],
+            'additional_js' => [base_url('assets/js/courses.js')],
+            'courses' => $courses,
+            'courses_registered' => $courses_registered,
+            'current_coureReg' => $current_coureReg
+        ];
+
+        return view_with_mobile_support('student/courses', $data);
     }
     public function results()
     {
-        return view('student/results');
+        $data = [
+            'title' => 'My Results',
+            'additional_css' => [],
+            'additional_js' => []
+        ];
+        return view_with_mobile_support('student/results', $data);
     }
+
     public function accomodations()
     {
-
         //current reservation
         $reservation_model = new Reservation_model();
         $current_reservation = $reservation_model
@@ -102,9 +141,8 @@ class Student extends BaseController
             ->where('userid', $_SESSION['userid'])
             ->where('session', $_SESSION['current_session'])
             ->first();
-        //       
+        
         //Reservation history
-
         $reservation_model = new Reservation_model();
         $reservation_history = $reservation_model
             ->join('hostels', 'reservations.hostelid = hostels.hostelid')
@@ -112,13 +150,21 @@ class Student extends BaseController
             ->join('bedspaces', 'reservations.bedspaceid = bedspaces.id')
             ->where('userid', $_SESSION['userid'])
             ->findAll();
-        // var_dump($reservation_history);exit;
-
 
         $gender = $this->session->get('gender');
         $hostel_model = new Hostel_model();
         $hostels = $hostel_model->where('hostel_gender', $gender)->findAll();
-        return view('student/accomodations', ['hostels' => $hostels, 'current_reservation' => $current_reservation, 'reservation_history' => $reservation_history]);
+
+        $data = [
+            'title' => 'Accommodation',
+            'additional_css' => [],
+            'additional_js' => [base_url('assets/js/accommodation.js')],
+            'hostels' => $hostels,
+            'current_reservation' => $current_reservation,
+            'reservation_history' => $reservation_history
+        ];
+        
+        return view_with_mobile_support('student/accomodations', $data);
     }
     public function ecards()
     {
@@ -150,7 +196,7 @@ class Student extends BaseController
                 ->where('user_id', $this->session->get('userid'))
                 ->where('type', 'Acceptance')
                 ->first();
-                //var_dump($acceptance);exit;
+            //var_dump($acceptance);exit;
             if ($acceptance) {
                 echo $_SESSION['acceptance_payment_status'] = 'paid';
             }
@@ -353,5 +399,25 @@ class Student extends BaseController
 
         $bedspaces = $db->query($sql)->getResultArray();
         return view('student/hostel', ['bedspaces' => $bedspaces]);
+    }
+
+    public function changepassword()
+    {
+        $currentPassword = $this->request->getPost('currentPassword');
+        $newPassword = $this->request->getPost('newPassword');
+        $confirmPassword = $this->request->getPost('confirmPassword');
+        $userid = $this->session->get('userid');
+        $user_model = new Auth_model();
+        $user = $user_model->where('userid', $userid)->first();
+        if ($user['password'] == hash('sha512', $currentPassword)) {
+            if ($newPassword == $confirmPassword) {
+                $user_model->update($userid, ['password' => hash('sha512', $newPassword)]);
+                return redirect('student')->with('msg', 'Password changed successfully.');
+            } else {
+                return redirect('student')->with('msg', 'New password does not match.');
+            }
+        } else {
+            return redirect('student')->with('msg', 'Current password is incorrect.');
+        }
     }
 }

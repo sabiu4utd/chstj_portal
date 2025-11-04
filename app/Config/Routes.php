@@ -32,6 +32,7 @@ $routes->post('student/make_reservation', 'Student::make_reservation');
 $routes->get('student/hostel', 'Student::hostel');
 $routes->post('student/get_bedsapces', 'Student::get_bedsapces');
 $routes->get('student/hostel_payments/(:segment)', 'Student::hostel_payments/$1');
+$routes->post('student/changepassword', 'Student::changepassword');
 
 
 

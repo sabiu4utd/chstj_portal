@@ -21,106 +21,29 @@ foreach($programs as $pg){
  ?>
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Manager - Admin Portal - KSCHST</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-     <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet">
-    <script src="../assets/js/script.js"></script>
-    <script src="../assets/js/responsive.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#coursesTable').DataTable({
-                pageLength: 10,
-                order: [[0, 'asc']]
-            });
-        });
-    </script>
-</body>
-</html>
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- DataTables CSS -->
-    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-    <style>
-        @media (max-width: 991.98px) {
-            .sidebar {
-                position: fixed;
-                left: -280px;
-                top: 0;
-                bottom: 0;
-                z-index: 1040;
-                transition: all 0.3s ease;
-            }
-            
-            .sidebar.show {
-                left: 0;
-            }
-            
-            .main-content {
-                margin-left: 0 !important;
-                width: 100% !important;
-            }
-            
-            .main-header {
-                padding-left: 4rem !important;
-            }
-        }
-        
-        @media (min-width: 992px) {
-            .main-content {
-                margin-left: 280px;
-                width: calc(100% - 280px);
-            }
-        }
-        
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1030;
-        }
-        
-        #sidebarToggle {
-            display: none;
-            position: fixed;
-            top: 1rem;
-            left: 1rem;
-            z-index: 1050;
-            background: #2c3e50;
-            border: none;
-            color: white;
-            padding: 0.5rem;
-            border-radius: 0.375rem;
-        }
-        
-        @media (max-width: 991.98px) {
-            #sidebarToggle {
-                display: block;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Sidebar Toggle Button -->
-    <button id="sidebarToggle" class="btn d-lg-none">
-        <i class="fas fa-bars"></i>
-    </button>
-    <div class="d-flex position-relative">
-        <!-- Sidebar -->
-         <?php echo view("staff/panel/sidebar.php"); ?>
+<?php 
+$sem ="";
+foreach($semester as $row){
+    $sem .= "<option value='".$row['id']."'>".$row['value']." Semester </option>";
+} 
 
-        <!-- Main Content -->
-        <div class="flex-grow-1 bg-light main-content">
+$session = "<option value='".$active_session['id']."'>".$active_session['session']."</option>";
+
+$depts = "";
+foreach($departments as $dp){
+    $depts .="<option value=".$dp['deptid'].">".$dp['dept_name']."</option>";
+}
+
+$program = "";
+foreach($programs as $pg){
+    $program .="<option value=".$pg['program_id'].">".$pg['program']."</option>";
+}
+?>
+
+<?= view('staff/common/header') ?>
+
+<!-- Main Content -->
+<div class="content-wrapper bg-light">
             <!-- Header -->
             <header class="main-header p-3">
                 <div class="d-flex justify-content-between align-items-center">
@@ -148,235 +71,292 @@ foreach($programs as $pg){
 
 
                 <!-- Quick Stats -->
-                <div class="row g-4 mb-4">
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 bg-primary bg-opacity-10 p-3 rounded">
-                                        <i class="fas fa-book text-primary fa-2x"></i>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h6 class="mb-1">Total Courses</h6>
-                                        <h4 class="mb-0">45</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="stats-grid">
+                <div class="stats-card">
+                    <div class="stats-icon bg-primary">
+                        <i class="fas fa-book"></i>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 bg-success bg-opacity-10 p-3 rounded">
-                                        <i class="fas fa-chalkboard-teacher text-success fa-2x"></i>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h6 class="mb-1">Active Courses</h6>
-                                        <h4 class="mb-0">38</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 bg-info bg-opacity-10 p-3 rounded">
-                                        <i class="fas fa-users text-info fa-2x"></i>
-                                    </div>
-                                    <div class="ms-3">
-                        <h6 class="mb-1">Departments</h6>
-                                        <h4 class="mb-0">3</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 bg-warning bg-opacity-10 p-3 rounded">
-                                        <i class="fas fa-clock text-warning fa-2x"></i>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h6 class="mb-1">Current Semester</h6>
-                                        <h4 class="mb-0">2nd</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="stats-info">
+                        <h6>Total Courses</h6>
+                        <h4>45</h4>
                     </div>
                 </div>
 
-                <!-- Course Management -->
-                <div class="row g-4">
-                    <!-- Course List -->
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center py-3">
-                                <h5 class="mb-0">Course List</h5>
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCourseModal">
-                                    <i class="fas fa-plus me-2"></i>Add New Course
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover" id="courseTable">
-                                        <thead>
-                                            <tr>
-                                                <th>Course Code</th>
-                                                <th>Course Title</th>
-                                                <th>Department</th>
-                                                <th>Credit Units</th>
-                                                <th>Level</th>
-                                                <th>Lecturer</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>CHT201</td>
-                                                <td>Community Health Practice</td>
-                                                <td>Community Health</td>
-                                                <td>3</td>
-                                                <td>200</td>
-                                                <td>Dr. Ahmed Ibrahim</td>
-                                                <td><span class="badge bg-success">Active</span></td>
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-sm btn-outline-primary">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
-                                                        <button class="btn btn-sm btn-outline-danger">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>CHT202</td>
-                                                <td>Primary Health Care</td>
-                                                <td>Community Health</td>
-                                                <td>3</td>
-                                                <td>200</td>
-                                                <td>Dr. Sarah James</td>
-                                                <td><span class="badge bg-success">Active</span></td>
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-sm btn-outline-primary">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
-                                                        <button class="btn btn-sm btn-outline-danger">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                <div class="stats-card">
+                    <div class="stats-icon bg-success">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="stats-info">
+                        <h6>Active Courses</h6>
+                        <h4>38</h4>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon bg-info">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stats-info">
+                        <h6>Departments</h6>
+                        <h4>3</h4>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon bg-warning">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stats-info">
+                        <h6>Current Semester</h6>
+                        <h4>2nd</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course Management -->
+            <div class="courses-section mt-4">
+                <div class="profile-card">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2 py-3">
+                        <h5 class="mb-0">Course List</h5>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+                            <i class="fas fa-plus me-2"></i>Add New Course
+                        </button>
+                    </div>
+                    <div class="table-wrapper">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="courseTable">
+                                <thead>
+                                    <tr>
+                                        <th>Course Code</th>
+                                        <th>Course Title</th>
+                                        <th>Department</th>
+                                        <th>Credit Units</th>
+                                        <th>Level</th>
+                                        <th>Lecturer</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td data-label="Code">CHT201</td>
+                                        <td data-label="Title">Community Health Practice</td>
+                                        <td data-label="Dept">Community Health</td>
+                                        <td data-label="Credits">3</td>
+                                        <td data-label="Level">200</td>
+                                        <td data-label="Lecturer">Dr. Ahmed Ibrahim</td>
+                                        <td data-label="Status"><span class="badge bg-success">Active</span></td>
+                                        <td data-label="Actions">
+                                            <div class="action-buttons">
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td data-label="Code">CHT202</td>
+                                        <td data-label="Title">Primary Health Care</td>
+                                        <td data-label="Dept">Community Health</td>
+                                        <td data-label="Credits">3</td>
+                                        <td data-label="Level">200</td>
+                                        <td data-label="Lecturer">Dr. Sarah James</td>
+                                        <td data-label="Status"><span class="badge bg-success">Active</span></td>
+                                        <td data-label="Actions">
+                                            <div class="action-buttons">
+                                                <button class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>
 
     <!-- Add Course Modal -->
     <div class="modal fade" id="addCourseModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add New Course</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="<?= site_url('staff/add_course') ?>">
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Course Code</label>
-                                <input type="text" name="course_code" class="form-control" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Course Title</label>
-                                <input type="text" name="course_title" class="form-control" required>
-                            </div>
+                    <form method="post" action="<?= site_url('staff/add_course') ?>" class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Course Code</label>
+                            <input type="text" name="course_code" class="form-control" required>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Department</label>
-                                <select name="deptid" class="form-select" required>
-                                    <option value="">Select Programme</option>
-                                  <?php echo $program; ?>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Level</label>
-                                <select name="level" class="form-select" required>
-                                    <option value="">Select Level</option>
-                                    <option>100</option>
-                                    <option>200</option>
-                                    <option>300</option>
-                                </select>
-                            </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Course Title</label>
+                            <input type="text" name="course_title" class="form-control" required>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label">Session</label>
-                                <select name="session" class="form-select" required>
-                                    <option value="">Select Session</option>
-                                    <?php echo $session; ?>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Semester</label>
-                                <select name="semester" class="form-select" required>
-                                    <option value="">Select Semester</option>
-                                    <?php echo $sem; ?>
-                                </select>
-                            </div>
-                        </div> 
-                        <div class="row mb-3">
-                            <div class="col-md-12">
-                                <label class="form-label">Credit Units</label>
-                                <input type="number" name="credit_unit" class="form-control" required>
-                            </div>
-                           
+                        
+                        <div class="form-group">
+                            <label class="form-label">Department</label>
+                            <select name="deptid" class="form-select" required>
+                                <option value="">Select Programme</option>
+                                <?= $program ?>
+                            </select>
                         </div>
-                       
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Add Course</button>
-                       
+                        
+                        <div class="form-group">
+                            <label class="form-label">Level</label>
+                            <select name="level" class="form-select" required>
+                                <option value="">Select Level</option>
+                                <option>100</option>
+                                <option>200</option>
+                                <option>300</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Session</label>
+                            <select name="session" class="form-select" required>
+                                <option value="">Select Session</option>
+                                <?= $session ?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Semester</label>
+                            <select name="semester" class="form-select" required>
+                                <option value="">Select Semester</option>
+                                <?= $sem ?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Credit Units</label>
+                            <input type="number" name="credit_unit" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add Course</button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                 
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap 5 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <!-- Custom JS -->
-    <script src="../assets/js/script.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#courseTable').DataTable({
-                pageLength: 10,
-                order: [[0, 'asc']]
-            });
-        });
-    </script>
-</body>
-</html>
+<style>
+    /* Additional Responsive Styles for Courses */
+    .courses-section {
+        margin: 1.5rem;
+    }
+
+    .table-wrapper {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-start;
+    }
+
+    @media (max-width: 992px) {
+        .courses-section {
+            margin: 1rem;
+        }
+
+        .table-wrapper {
+            border-radius: 8px;
+        }
+
+        #courseTable {
+            display: block;
+        }
+
+        #courseTable thead {
+            display: none;
+        }
+
+        #courseTable tbody tr {
+            display: block;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        #courseTable td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            border: none;
+        }
+
+        #courseTable td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .action-buttons {
+            justify-content: flex-end;
+            margin-top: 0.5rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .courses-section {
+            margin: 0.5rem;
+        }
+
+        .card-header {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .card-header h5 {
+            width: 100%;
+        }
+
+        .card-header .btn {
+            width: 100%;
+        }
+    }
+
+    /* Modal Form Styles */
+    .form-grid {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .form-actions {
+            flex-direction: column-reverse;
+        }
+
+        .form-actions .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+<?= view('staff/common/footer') ?>

@@ -88,8 +88,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="<?php echo base_url() ?>assets/css/style.css" rel="stylesheet">
+    <!-- Responsive CSS -->
+    <link href="<?php echo base_url() ?>assets/css/responsive.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 <body>
     <div class="d-flex">
@@ -127,7 +131,7 @@
                                     </div>
                                     <div class="ms-3">
                                         <h6 class="mb-1">Current CGPA</h6>
-                                        <h4 class="mb-0">3.75</h4>
+                                        <h4 class="mb-0">0.0</h4>
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +146,7 @@
                                     </div>
                                     <div class="ms-3">
                                         <h6 class="mb-1">Courses</h6>
-                                        <h4 class="mb-0">6</h4>
+                                        <h4 class="mb-0">0</h4>
                                     </div>
                                 </div>
                             </div>
@@ -157,7 +161,7 @@
                                     </div>
                                     <div class="ms-3">
                                         <h6 class="mb-1">Attendance</h6>
-                                        <h4 class="mb-0">85%</h4>
+                                        <h4 class="mb-0">0%</h4>
                                     </div>
                                 </div>
                             </div>
@@ -172,7 +176,7 @@
                                     </div>
                                     <div class="ms-3">
                                         <h6 class="mb-1">Semester</h6>
-                                        <h4 class="mb-0">2nd</h4>
+                                        <h4 class="mb-0">1st</h4>
                                     </div>
                                 </div>
                             </div>
@@ -180,6 +184,11 @@
                     </div>
                 </div>
 
+                <?php if (session()->getFlashdata('msg')) : ?>
+                    <div class="alert alert-success">
+                        <?php echo session()->getFlashdata('msg'); ?>
+                    </div>
+                <?php endif; ?>
                 <!-- Upcoming Events & Announcements -->
                 <div class="row g-4">
                     <div class="col-md-8">
@@ -192,20 +201,20 @@
                                 <div class="list-group list-group-flush">
                                     <div class="list-group-item">
                                         <div class="d-flex w-100 justify-content-between">
-                                            <h6 class="mb-1">Mid-Semester Examination</h6>
-                                            <small class="text-muted">3 days</small>
+                                            <h6 class="mb-1">1st Semester Lecture</h6>
+                                            <small class="text-muted">Comming soon </small>
                                         </div>
                                         <p class="mb-1">Preparation for mid-semester examination starts</p>
-                                        <small class="text-muted">September 1, 2025</small>
+                                        <small class="text-muted">January 1, 2025</small>
                                     </div>
-                                    <div class="list-group-item">
+                                    <!-- <div class="list-group-item">
                                         <div class="d-flex w-100 justify-content-between">
                                             <h6 class="mb-1">Course Registration Deadline</h6>
                                             <small class="text-muted">1 week</small>
                                         </div>
                                         <p class="mb-1">Last date for course registration</p>
                                         <small class="text-muted">September 5, 2025</small>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -217,13 +226,13 @@
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-custom mb-3">
-                                    <h6 class="mb-1">Holiday Notice</h6>
-                                    <p class="mb-0 small">College will remain closed on September 3rd for maintenance.</p>
+                                    <h6 class="mb-1"> Notice Lecture</h6>
+                                    <p class="mb-0 small">College will be on lecture on January 3rd.</p>
                                 </div>
-                                <div class="alert alert-custom mb-3">
+                                <!-- <div class="alert alert-custom mb-3">
                                     <h6 class="mb-1">Library Hours Extended</h6>
                                     <p class="mb-0 small">Library will remain open until 10 PM during examination period.</p>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -236,6 +245,48 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="../assets/js/script.js"></script>
-    <script src="../assets/js/responsive.js"></script>
+    <script>
+        // Mobile sidebar toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const mainContent = document.querySelector('.main-content');
+            const overlay = document.createElement('div');
+            overlay.classList.add('sidebar-overlay');
+            document.body.appendChild(overlay);
+
+            function toggleSidebar() {
+                sidebar.classList.toggle('show');
+                overlay.style.display = sidebar.classList.contains('show') ? 'block' : 'none';
+                if (sidebar.classList.contains('show')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = '';
+                }
+            }
+
+            sidebarToggle.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+
+            // Close sidebar when clicking a nav link on mobile
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth < 992) {
+                        toggleSidebar();
+                    }
+                });
+            });
+
+            // Handle resize events
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 992) {
+                    sidebar.classList.remove('show');
+                    overlay.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

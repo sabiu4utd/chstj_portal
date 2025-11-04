@@ -1,158 +1,192 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - KSCHST Portal</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="<?php echo base_url(); ?>assets/css/style.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="d-flex">
-        <!-- Sidebar -->
-        <?php echo view("staff/panel/sidebar.php"); ?>
+<?= view('staff/common/header') ?>
 
-        <!-- Main Content -->
-        <div class="flex-grow-1 bg-light">
-            <!-- Header -->
-            <header class="main-header p-3">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h4 class="mb-0">Admin Dashboard</h4>
-                        <small class="text-muted">Welcome back, Admin</small>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="me-3">
-                            <i class="fas fa-bell text-muted"></i>
-                        </div>
-                        <img src="https://via.placeholder.com/40" class="rounded-circle profile-image" alt="Profile">
-                    </div>
+<!-- Main Content -->
+<div class="content-wrapper">
+    <header class="main-header p-3">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-0">Staff Dashboard</h4>
+                <small class="text-muted">Welcome back, <?= session()->get('name') ?></small>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="me-3">
+                    <i class="fas fa-bell text-muted"></i>
                 </div>
-            </header>
+                <img src="https://via.placeholder.com/40" class="rounded-circle profile-image" alt="Profile">
+            </div>
+        </div>
+    </header>
 
-            <!-- Dashboard Content -->
-            <div class="p-4">
-                <!-- Quick Stats -->
-                <div class="row g-4 mb-4">
-                    <div class="col-md-3">
-                        <div class="card dashboard-card h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 bg-primary bg-opacity-10 p-3 rounded">
-                                        <i class="fas fa-user-graduate text-primary fa-2x"></i>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h6 class="mb-1">Total Students</h6>
-                                        <h4 class="mb-0"><?php echo $_SESSION['total_students'] ?></h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card dashboard-card h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 bg-success bg-opacity-10 p-3 rounded">
-                                        <i class="fas fa-users text-success fa-2x"></i>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h6 class="mb-1">Total Staff</h6>
-                                        <h4 class="mb-0"><?php echo $_SESSION['total_staff'] ?></h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card dashboard-card h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 bg-warning bg-opacity-10 p-3 rounded">
-                                        <i class="fas fa-book text-warning fa-2x"></i>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h6 class="mb-1">Courses</h6>
-                                        <h4 class="mb-0"><?php echo $_SESSION['total_courses'] ?></h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="card dashboard-card h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0 bg-danger bg-opacity-10 p-3 rounded">
-                                        <i class="fas fa-building text-danger fa-2x"></i>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h6 class="mb-1">Hostels</h6>
-                                        <h4 class="mb-0"><?php echo $_SESSION['total_hostels'] ?></h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div class="dashboard-content p-3">
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stats-card">
+                <div class="stats-icon bg-primary">
+                    <i class="fas fa-user-graduate"></i>
                 </div>
+                <div class="stats-info">
+                    <h6>Total Students</h6>
+                    <h4><?= $_SESSION['total_students'] ?></h4>
+                </div>
+            </div>
 
-                <!-- Recent Activities & Quick Actions -->
-                <div class="row g-4">
-                    <div class="col-md-12">
-                          <?php if(session()->getFlashdata('msg')) { ?>
-                            <div class="alert alert-danger">
-                                <?php echo session()->getFlashdata('msg'); ?>
-                            </div>
-                            <?php } ?>
-                        <div class="card h-100">
-                            <div class="card-header" style="text-align: center;">
-                                CENTRAL REGISTRATIONS
-                            </div>
-                            <div class="card-body">
-                               <form action="<?php echo site_url('staff/fetch_student') ?>" method="post">
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" required placeholder="Application Number or Admission number" name="pnumber" id="pnumber" aria-label="Search student by name or admission number" aria-describedby="button-addon2">
-                                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Fetch Student Record</button>
-                                </div>
-                               </form>
-                            </div>
+            <div class="stats-card">
+                <div class="stats-icon bg-success">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stats-info">
+                    <h6>Total Staff</h6>
+                    <h4><?= $_SESSION['total_staff'] ?></h4>
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-icon bg-warning">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="stats-info">
+                    <h6>Courses</h6>
+                    <h4><?= $_SESSION['total_courses'] ?></h4>
+                </div>
+            </div>
+
+            <div class="stats-card">
+                <div class="stats-icon bg-danger">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="stats-info">
+                    <h6>Hostels</h6>
+                    <h4><?= $_SESSION['total_hostels'] ?></h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Central Registration -->
+        <div class="registration-section mt-4">
+            <?php if(session()->getFlashdata('msg')): ?>
+            <div class="alert alert-danger">
+                <?= session()->getFlashdata('msg') ?>
+            </div>
+            <?php endif; ?>
+
+            <div class="card">
+                <div class="card-header text-center">
+                    CENTRAL REGISTRATIONS
+                </div>
+                <div class="card-body">
+                    <form action="<?= site_url('staff/fetch_student') ?>" method="post" class="responsive-form">
+                        <div class="search-group">
+                            <input type="text" 
+                                   class="form-control" 
+                                   required 
+                                   placeholder="Application Number or Admission number" 
+                                   name="pnumber" 
+                                   id="pnumber">
+                            <button class="btn btn-primary" type="submit">
+                                Search Student
+                            </button>
                         </div>
-                    </div>
-                    <!-- <div class="col-md-4">
-                        <div class="card h-100">
-                            <div class="card-header">
-                                <h5 class="mb-0">Quick Actions</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="d-grid gap-2">
-                                    <button class="btn btn-outline-primary">
-                                        <i class="fas fa-user-plus me-2"></i>Add New Student
-                                    </button>
-                                    <button class="btn btn-outline-primary">
-                                        <i class="fas fa-user-tie me-2"></i>Add New Staff
-                                    </button>
-                                    <button class="btn btn-outline-primary">
-                                        <i class="fas fa-book-medical me-2"></i>Create Course
-                                    </button>
-                                    <button class="btn btn-outline-primary">
-                                        <i class="fas fa-file-alt me-2"></i>Generate Reports
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Bootstrap 5 JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="../assets/js/script.js"></script>
-</body>
-</html>
+<style>
+    /* Dashboard responsive styles */
+    .content-wrapper {
+        flex: 1;
+        background: #f8f9fa;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .stats-card {
+        background: #fff;
+        border-radius: 10px;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .stats-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+    }
+
+    .stats-icon i {
+        font-size: 1.5rem;
+        color: #fff;
+    }
+
+    .stats-info h6 {
+        margin: 0;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .stats-info h4 {
+        margin: 0.25rem 0 0 0;
+        font-size: 1.5rem;
+    }
+
+    .search-group {
+        display: flex;
+        gap: 1rem;
+    }
+
+    @media (max-width: 768px) {
+        .stats-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        .search-group {
+            flex-direction: column;
+        }
+
+        .search-group .btn {
+            width: 100%;
+        }
+
+        .stats-card {
+            padding: 1rem;
+        }
+
+        .stats-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .stats-info h4 {
+            font-size: 1.25rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .main-header {
+            padding: 1rem !important;
+        }
+
+        .dashboard-content {
+            padding: 1rem !important;
+        }
+
+        .stats-card {
+            padding: 0.75rem;
+        }
+    }
+</style>
+
+<?= view('staff/common/footer') ?>

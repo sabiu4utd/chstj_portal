@@ -66,7 +66,11 @@ class Student extends BaseController
             ->orWhere('programid', $this->session->get('programid'))
             ->findAll();
         if ($stateid == 21) {
-            $tution_fees = array_sum(array_column($amount, 'amount')) - 50000;
+            if ($this->session->get('current_level') > 100) {
+                $tution_fees = array_sum(array_column($amount, 'amount')) - 25000;
+            } else {
+                $tution_fees = array_sum(array_column($amount, 'amount')) - 50000;
+            }
         } else {
             $tution_fees = array_sum(array_column($amount, 'amount'));
         }

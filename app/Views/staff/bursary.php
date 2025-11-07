@@ -1,240 +1,103 @@
-    <style>
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
-        margin: 1.5rem;
-    }
-
-    .stats-card {
-        background: white;
-        border-radius: 10px;
-        padding: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .stats-icon {
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-    }
-
-    .stats-icon i {
-        font-size: 1.25rem;
-        color: white;
-    }
-
-    .stats-info h6 {
-        color: #6c757d;
-        margin-bottom: 0.25rem;
-        font-size: 0.875rem;
-    }
-
-    .stats-info h4 {
-        color: #212529;
-        margin: 0;
-        font-weight: 600;
-    }
-
-    @media (max-width: 768px) {
-        .stats-grid {
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            margin: 1rem;
-        }
-
-        .stats-card {
-            padding: 1rem;
-        }
-
-        .stats-icon {
-            width: 40px;
-            height: 40px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .stats-card {
-            flex-direction: column;
-            text-align: center;
-            padding: 1rem 0.75rem;
-        }
-
-        .stats-info h6 {
-            font-size: 0.75rem;
-        }
-
-        .stats-info h4 {
-            font-size: 1.25rem;
-        }
-    }
-    </style>
-</head>
 <?php //var_dump($programmes); exit;
 $prg = "";
 foreach ($programmes as $programme) {
     $prg .= "<option value='" . $programme['program_id'] . "'>" . $programme['program'] . "</option>";
 }
-    /* Bursary specific styles */
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
-        margin: 1.5rem;
-    }
-
-    .stats-card {
-        background: white;
-        border-radius: 10px;
-        padding: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .stats-icon {
-        width: 48px;
-        height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 8px;
-    }
-
-    .stats-icon i {
-        font-size: 1.25rem;
-        color: white;
-    }
-
-    .stats-info h6 {
-        color: #6c757d;
-        margin-bottom: 0.25rem;
-        font-size: 0.875rem;
-    }
-
-    .stats-info h4 {
-        color: #212529;
-        margin: 0;
-        font-weight: 600;
-    }
-
-    .verification-section {
-        margin: 1.5rem;
-    }
-
-    .search-group {
-        display: flex;
-        gap: 1rem;
-        margin-top: 0.5rem;
-    }
-
-    .payments-section {
-        margin: 1.5rem;
-    }
-
-    .table-wrapper {
-        background: white;
-        border-radius: 10px;
-        padding: 1rem;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .action-buttons {
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    @media (max-width: 768px) {
-        .stats-grid {
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            margin: 1rem;
-        }
-
-        .stats-card {
-            padding: 1rem;
-        }
-
-        .stats-icon {
-            width: 40px;
-            height: 40px;
-        }
-
-        .verification-section,
-        .payments-section {
-            margin: 1rem;
-        }
-
-        .search-group {
-            flex-direction: column;
-        }
-
-        .search-group .btn {
-            width: 100%;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .table-responsive {
-            margin: 0 -1rem;
-        }
-
-        .table td {
-            white-space: nowrap;
-        }
-
-        .action-buttons {
-            flex-wrap: wrap;
-        }
-
-        .action-buttons .btn {
-            padding: 0.25rem 0.5rem;
-            font-size: 0.875rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .stats-card {
-            flex-direction: column;
-            text-align: center;
-            padding: 1rem 0.75rem;
-        }
-
-        .stats-info h6 {
-            font-size: 0.75rem;
-        }
-
-        .stats-info h4 {
-            font-size: 1.25rem;
-        }
-    }
 
 
 
 
 ?>
-<?php 
-$prg = "";
-foreach ($programmes as $programme) {
-    $prg .= "<option value='" . $programme['program_id'] . "'>" . $programme['program'] . "</option>";
-}
-?>
+<!DOCTYPE html>
+<html lang="en">
 
-<?= view('staff/common/header') ?>
-    <!-- Bursary Specific Styles -->
-    <link rel="stylesheet" href="../assets/css/bursary.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bursary Manager - Admin Portal - KSCHST</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <style>
+        @media (max-width: 991.98px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                top: 0;
+                bottom: 0;
+                z-index: 1040;
+                transition: all 0.3s ease;
+            }
 
-<!-- Main Content -->
-<div class="content-wrapper bg-light">
+            .sidebar.show {
+                left: 0;
+            }
+
+            .main-content {
+                margin-left: 0 !important;
+                width: 100% !important;
+            }
+
+            .main-header {
+                padding-left: 4rem !important;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .main-content {
+                margin-left: 280px;
+                width: calc(100% - 280px);
+            }
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1030;
+        }
+
+        #sidebarToggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1050;
+            background: #2c3e50;
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+        }
+
+        @media (max-width: 991.98px) {
+            #sidebarToggle {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar Toggle Button -->
+    <button id="sidebarToggle" class="btn d-lg-none">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="d-flex position-relative">
+        <!-- Sidebar -->
+        <?php echo view("staff/panel/sidebar.php"); ?>
+
+        <!-- Main Content -->
+        <div class="flex-grow-1 bg-light main-content">
             <!-- Header -->
             <header class="main-header p-3">
                 <div class="d-flex justify-content-between align-items-center">
@@ -257,237 +120,282 @@ foreach ($programmes as $programme) {
             <?php } ?>
             <!-- Content -->
             <div class="p-4">
-            <!-- Quick Stats -->
-            <div class="stats-grid">
-                <div class="stats-card">
-                    <div class="stats-icon bg-success">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <div class="stats-info">
-                        <h6>Total Revenue</h6>
-                        <h4>₦25.5M</h4>
-                    </div>
-                </div>
-
-                <div class="stats-card">
-                    <div class="stats-icon bg-primary">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
-                    <div class="stats-info">
-                        <h6>Paid Students</h6>
-                        <h4>1788</h4>
-                    </div>
-                </div>
-
-                <div class="stats-card">
-                    <div class="stats-icon bg-warning">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stats-info">
-                        <h6>Pending</h6>
-                        <h4>150</h4>
-                    </div>
-                </div>
-
-                <div class="stats-card">
-                    <div class="stats-icon bg-danger">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div class="stats-info">
-                        <h6>Defaulters</h6>
-                        <h4>50</h4>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions -->
-            <div class="quick-actions-grid mt-4">
-                <button class="action-button" data-bs-toggle="modal" data-bs-target="#addFeeModal">
-                    <i class="fas fa-plus"></i>
-                    <span>Add Fee Item</span>
-                </button>
-                
-                <button class="action-button" data-bs-toggle="modal" data-bs-target="#reportModal">
-                    <i class="fas fa-file-alt"></i>
-                    <span>Generate Report</span>
-                </button>
-                
-                <button class="action-button" data-bs-toggle="modal" data-bs-target="#paymentscheduleModal">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Payment Schedule</span>
-                </button>
-                
-                <button class="action-button" data-bs-toggle="modal" data-bs-target="#paymentHistoryModal">
-                    <i class="fas fa-history"></i>
-                    <span>Payment History</span>
-                </button>
-            </div>
-
-            <!-- Payment Verification -->
-            <div class="verification-section mt-4">
-                <div class="profile-card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Verify Payments</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="<?= site_url('staff/verifyPayments') ?>" method="POST" class="verification-form">
-                            <div class="form-group">
-                                <label class="form-label">Matric Number</label>
-                                <div class="search-group">
-                                    <input type="text" 
-                                           name="pnumber" 
-                                           placeholder="Enter Matric Number" 
-                                           required 
-                                           class="form-control">
-                                    <button type="submit" class="btn btn-primary">
-                                        Load Student Payments
-                                    </button>
+                <!-- Quick Stats -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 bg-success bg-opacity-10 p-3 rounded">
+                                        <i class="fas fa-money-bill-wave text-success fa-2x"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="mb-1">Total Revenue</h6>
+                                        <h4 class="mb-0">₦25.5M</h4>
+                                    </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Recent Payments -->
-            <div class="payments-section mt-4">
-                <div class="profile-card">
-                    <div class="card-header">
-                        <h5 class="mb-0">Recent Payments</h5>
+                    <div class="col-md-3">
+                        <div class="card">
+
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 bg-primary bg-opacity-10 p-3 rounded">
+                                        <i class="fas fa-user-graduate text-primary fa-2x"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="mb-1">Paid Students</h6>
+                                        <h4 class="mb-0">1788</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="table-wrapper">
-                        <div class="table-responsive">
-                            <table class="table" id="paymentsTable">
-                                <thead>
-                                    <tr>
-                                        <th>SN</th>
-                                        <th>Receipt No.</th>
-                                        <th>Student Name</th>
-                                        <th>Registration No.</th>
-                                        <th>Amount</th>
-                                        <th>Payment Type</th>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $sn = 1;
-                                    foreach ($payments as $payment): ?>
-                                    <tr>
-                                        <td data-label="SN"><?= $sn++ ?></td>
-                                        <td data-label="Receipt"><?= $payment['transaction_reference'] ?></td>
-                                        <td data-label="Name"><?= $payment['firstname'] . ' ' . $payment['surname'] . ' ' . $payment['othername'] ?></td>
-                                        <td data-label="Reg No."><?= $payment['pnumber'] ?></td>
-                                        <td data-label="Amount"><?= $payment['amount'] ?></td>
-                                        <td data-label="Type"><?= $payment['type'] ?></td>
-                                        <td data-label="Date"><?= $payment['created_at'] ?></td>
-                                        <td data-label="Status"><span class="badge bg-success">Verified</span></td>
-                                        <td data-label="Actions">
-                                            <div class="action-buttons">
-                                                <button class="btn btn-sm btn-outline-primary">
-                                                    <i class="fas fa-print"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 bg-warning bg-opacity-10 p-3 rounded">
+                                        <i class="fas fa-clock text-warning fa-2x"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="mb-1">Pending</h6>
+                                        <h4 class="mb-0">150</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="flex-shrink-0 bg-danger bg-opacity-10 p-3 rounded">
+                                        <i class="fas fa-exclamation-triangle text-danger fa-2x"></i>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h6 class="mb-1">Defaulters</h6>
+                                        <h4 class="mb-0">50</h4>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <!-- Fee Structure and Payment History -->
+                <div class="row g-4">
+                    <!-- Fee Structure -->
+
+
+                    <!-- Payment History -->
+                    <div class="col-md-3">
+                        <div class="card">
+                            <a href="" data-bs-toggle="modal" data-bs-target="#addFeeModal" class="btn btn-primary">Add Fee Item</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <a href="" data-bs-toggle="modal" data-bs-target="#reportModal" class="btn btn-primary">Generate Report</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <a href="" data-bs-toggle="modal" data-bs-target="#paymentscheduleModal" class="btn btn-primary">Payment Schedule</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <a href="" data-bs-toggle="modal" data-bs-target="#paymentHistoryModal" class="btn btn-primary">Payment History</a>
+                        </div>
+                    </div>
+
+                    <!-- Payment Analytics -->
+
+                </div>
+                <hr>
+
+
+
+                <div class="row g-4">
+                    <!-- Fee Structure -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center py-3">
+                                <h5 class="mb-0">Verify Payments</h5>
+
+                            </div>
+                            <div class="card-body">
+                                <form action="<?php echo site_url('staff/verifyPayments'); ?>" method="POST">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="form-label">Matric Number</label>
+                                            <input type="text" name="pnumber" placeholder="Enter Matric Number" required class="form-control">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="submit" value="Load Student Payments" class="btn btn-primary">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment History -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Recent Payments</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table" id="paymentsTable">
+                                        <thead>
+                                            <tr>
+                                                <th>SN</th>
+                                                <th>Receipt No.</th>
+                                                <th>Student Name</th>
+                                                <th>Registration No.</th>
+                                                <th>Amount</th>
+                                                <th>Payment Type</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $sn = 1;
+                                            foreach ($payments as $payment) { ?>
+                                                <tr>
+                                                    <td><?php echo $sn++; ?></td>
+                                                    <td><?php echo $payment['transaction_reference']; ?></td>
+                                                    <td><?php echo $payment['firstname'] . ' ' . $payment['surname'] . ' ' . $payment['othername']; ?></td>
+                                                    <td><?php echo $payment['pnumber']; ?></td>
+                                                    <td><?php echo $payment['amount']; ?></td>
+                                                    <td><?php echo $payment['type']; ?></td>
+                                                    <td><?php echo $payment['created_at']; ?></td>
+                                                    <td><?php echo $payment['status']; ?></td>
+                                                    <td><span class="badge bg-success">Verified</span></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">
+                                                            <i class="fas fa-print"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Analytics -->
+
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Report Modal -->
+    <!-- Add Fee Modal -->
     <div class="modal fade" id="reportModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Generate Report</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="<?= site_url('staff/generateReport') ?>" class="form-grid">
-                        <div class="form-group">
+                    <form method="post" action="<?php echo site_url('staff/generateReport'); ?>">
+                        <div class="mb-3">
                             <label class="form-label">Programme</label>
                             <select name="programid" class="form-select" required>
                                 <option value="">Select Programme</option>
-                                <?= $prg ?>
+
+                                <?php echo $prg; ?>
                             </select>
                         </div>
-                        
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label class="form-label">Payment Type</label>
                             <select name="type" class="form-select" required>
                                 <option value="">Select Payment Type</option>
+
                                 <option value="Accomodation">Accomodation</option>
                                 <option value="School Fees">School Fees</option>
                                 <option value="Acceptance">Acceptance</option>
+
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label class="form-label">Level</label>
                             <select name="level" class="form-select" required>
                                 <option value="">Select Level</option>
+
                                 <option value="100">100</option>
                                 <option value="200">200</option>
                                 <option value="300">300</option>
                                 <option value="400">400</option>
+
                             </select>
                         </div>
-                        
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label class="form-label">Academic Session</label>
                             <select name="session" class="form-select" required>
                                 <option value="">Select Session</option>
-                                <?php for ($year = 2025; $year <= 2031; $year++): ?>
-                                    <option value="<?= $year ?>/<?= $year + 1 ?>"><?= $year ?>/<?= $year + 1 ?></option>
-                                <?php endfor; ?>
+
+                                <option value="2025/2026">2025/2026</option>
+                                <option value="2026/2027">2026/2027</option>
+                                <option value="2027/2028">2027/2028</option>
+                                <option value="2028/2029">2028/2029</option>
+                                <option value="2029/2030">2029/2030</option>
+                                <option value="2030/2031">2030/2031</option>
+                                <option value="2031/2032">2031/2032</option>
                             </select>
                         </div>
-                        
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Generate Report</button>
+                        <div class="mb-3">
+                            <input type="submit" value="Generate Report" class="btn btn-primary">
                         </div>
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <!-- <button type="button" class="btn btn-primary">Add Fee</button> -->
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="addFeeModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add New Fee Item</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="<?= site_url('staff/add_fee') ?>" class="form-grid">
-                        <div class="form-group">
+                    <form method="post" action="<?php echo site_url('staff/add_fee'); ?>">
+                        <div class="mb-3">
                             <label class="form-label">Programme</label>
                             <select name="programid" class="form-select" required>
                                 <option value="">Select Programme</option>
-                                <?= $prg ?>
+                                <?php echo $prg; ?>
                             </select>
                         </div>
-                        
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label class="form-label">Fee Name</label>
                             <input type="text" name="item" class="form-control" placeholder="e.g Tuition Fee" required>
                         </div>
-                        
-                        <div class="form-group">
+                        <div class="mb-3">`
                             <label class="form-label">Amount (₦)</label>
                             <input type="number" name="amount" class="form-control" required>
                         </div>
-                        
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label class="form-label">Level</label>
                             <select name="level" class="form-select" required>
                                 <option value="">Select Level</option>
@@ -495,24 +403,30 @@ foreach ($programmes as $programme) {
                                 <option value="200">200</option>
                                 <option value="300">300</option>
                                 <option value="400">400</option>
+
                             </select>
                         </div>
-                        
-                        <div class="form-group">
+                        <div class="mb-3">
                             <label class="form-label">Academic Session</label>
                             <select name="session" class="form-select" required>
                                 <option value="">Select Session</option>
-                                <?php for ($year = 2025; $year <= 2031; $year++): ?>
-                                    <option value="<?= $year ?>/<?= $year + 1 ?>"><?= $year ?>/<?= $year + 1 ?></option>
-                                <?php endfor; ?>
+                                <option value="2025/2026">2025/2026</option>
+                                <option value="2026/2027">2026/2027</option>
+                                <option value="2027/2028">2027/2028</option>
+                                <option value="2028/2029">2028/2029</option>
+                                <option value="2029/2030">2029/2030</option>
+                                <option value="2030/2031">2030/2031</option>
+                                <option value="2031/2032">2031/2032</option>
                             </select>
                         </div>
-                        
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Add Fee</button>
+                        <div class="mb-3">
+                            <input type="submit" value="Add Fee" class="btn btn-primary">
                         </div>
                     </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <!-- <button type="button" class="btn btn-primary">Add Fee</button> -->
                 </div>
             </div>
         </div>

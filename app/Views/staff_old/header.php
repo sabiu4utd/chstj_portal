@@ -1,36 +1,15 @@
-<!-- Common staff header with responsive meta tags and CSS -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHSTJ Staff Portal</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Core CSS -->
     <link href="<?= base_url('assets/css/style.css') ?>" rel="stylesheet">
-    <!-- Responsive styles -->
-    <style>
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            .table-responsive {
-                overflow-x: auto;
-            }
-            .nav-mobile {
-                display: block;
-            }
-            .nav-desktop {
-                display: none;
-            }
-            .form-group {
-                margin-bottom: 15px;
-            }
-            .btn {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-        }
-    </style>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">

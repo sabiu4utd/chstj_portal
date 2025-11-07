@@ -2,12 +2,17 @@
 document.addEventListener("DOMContentLoaded", function () {
   const sidebar = document.querySelector(".sidebar");
   const content = document.querySelector(".flex-grow-1");
-  const overlay = document.createElement("div");
-  overlay.className = "sidebar-overlay";
-  document.body.appendChild(overlay);
 
-  // Create toggle button if it doesn't exist
-  if (!document.getElementById("sidebarToggle")) {
+  // Create overlay only if there's a sidebar to control
+  let overlay = null;
+  if (sidebar) {
+    overlay = document.createElement("div");
+    overlay.className = "sidebar-overlay";
+    document.body.appendChild(overlay);
+  }
+
+  // Create toggle button if it doesn't exist and we have a sidebar
+  if (sidebar && !document.getElementById("sidebarToggle")) {
     const toggleBtn = document.createElement("button");
     toggleBtn.id = "sidebarToggle";
     toggleBtn.className = "btn d-lg-none";
@@ -15,33 +20,43 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.appendChild(toggleBtn);
   }
 
-  // Toggle sidebar
-  document
-    .getElementById("sidebarToggle")
-    .addEventListener("click", function () {
-      sidebar.style.left = sidebar.style.left === "0px" ? "-280px" : "0px";
-      overlay.style.display =
-        overlay.style.display === "block" ? "none" : "block";
-      content.style.marginLeft =
-        content.style.marginLeft === "280px" ? "0" : "280px";
+  // Attach toggle handler only if the toggle exists
+  const toggleEl = document.getElementById("sidebarToggle");
+  if (toggleEl) {
+    toggleEl.addEventListener("click", function () {
+      if (sidebar) {
+        sidebar.style.left = sidebar.style.left === "0px" ? "-280px" : "0px";
+      }
+      if (overlay) {
+        overlay.style.display =
+          overlay.style.display === "block" ? "none" : "block";
+      }
+      if (content) {
+        content.style.marginLeft =
+          content.style.marginLeft === "280px" ? "0" : "280px";
+      }
     });
+  }
 
   // Close sidebar when clicking overlay
-  overlay.addEventListener("click", function () {
-    sidebar.style.left = "-280px";
-    overlay.style.display = "none";
-    content.style.marginLeft = "0";
-  });
+  if (overlay) {
+    overlay.addEventListener("click", function () {
+      if (sidebar) sidebar.style.left = "-280px";
+      overlay.style.display = "none";
+      if (content) content.style.marginLeft = "0";
+    });
+  }
 
-  // Close sidebar when window is resized to larger screen
+  // Close or open sidebar appropriately when window is resized
   window.addEventListener("resize", function () {
+    if (!sidebar) return;
     if (window.innerWidth > 991.98) {
       sidebar.style.left = "0";
-      overlay.style.display = "none";
-      content.style.marginLeft = "280px";
+      if (overlay) overlay.style.display = "none";
+      if (content) content.style.marginLeft = "280px";
     } else {
       sidebar.style.left = "-280px";
-      content.style.marginLeft = "0";
+      if (content) content.style.marginLeft = "0";
     }
   });
 });

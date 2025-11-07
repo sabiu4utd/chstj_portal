@@ -39,7 +39,7 @@ class Student extends BaseController
             'additional_css' => [],
             'additional_js' => []
         ];
-        
+
         return view_with_mobile_support('student/dashboard', $data);
     }
     public function info()
@@ -54,6 +54,7 @@ class Student extends BaseController
 
     public function payments()
     {
+        $stateid = $this->session->get('stateid');
         $payment_history = new Payment_model();
         $history = $payment_history->where('user_id', $this->session->get('userid'))->findAll();
 
@@ -61,9 +62,23 @@ class Student extends BaseController
         $amount = $paymentmodel
             ->where('session', $this->session->get('current_session'))
             ->where('level', $this->session->get('current_level'))
-            ->where('programid', $this->session->get('programid'))
+            ->where('programid', 1)
+            ->orWhere('programid', $this->session->get('programid'))
             ->findAll();
-        $tution_fees = array_sum(array_column($amount, 'amount'));
+        if ($stateid == 21) {
+            $tution_fees = array_sum(array_column($amount, 'amount')) - 50000;
+        } else {
+            $tution_fees = array_sum(array_column($amount, 'amount'));
+        }
+        // echo $this->session->get('programid');
+        // exit;
+        // $peculiar = $paymentmodel
+        //     ->where('session', $this->session->get('current_session'))
+        //     ->where('level', $this->session->get('current_level'))
+        //     ->where('programid', $this->session->get('programid'))
+        //     ->findAll();
+        // $peculiar_fees = array_sum(array_column($peculiar, 'amount'));
+
 
         $acceptance_fee = $payment_history
             ->where('user_id', $this->session->get('userid'))
@@ -81,6 +96,7 @@ class Student extends BaseController
             'additional_css' => [],
             'additional_js' => [base_url('assets/js/payment.js')],
             'tution_fees' => $tution_fees,
+            // 'peculiar_fees' => $peculiar_fees,
             'amount' => $amount,
             'history' => $history,
             'acceptance_fee' => $acceptance_fee,
@@ -108,7 +124,7 @@ class Student extends BaseController
 
         $coursemodel = new Course_model();
         $courses = $coursemodel->where('session', $session['id'])->where('deptid', $programid)->where('level', $level)->findAll();
-        
+
         $data = [
             'title' => 'My Courses',
             'additional_css' => [],
@@ -141,7 +157,7 @@ class Student extends BaseController
             ->where('userid', $_SESSION['userid'])
             ->where('session', $_SESSION['current_session'])
             ->first();
-        
+
         //Reservation history
         $reservation_model = new Reservation_model();
         $reservation_history = $reservation_model
@@ -163,7 +179,7 @@ class Student extends BaseController
             'current_reservation' => $current_reservation,
             'reservation_history' => $reservation_history
         ];
-        
+
         return view_with_mobile_support('student/accomodations', $data);
     }
     public function ecards()
@@ -230,10 +246,6 @@ class Student extends BaseController
         return redirect('student/payments')->with('success', 'Payment processed successfully.');
         //return view('student/process_payments');
     }
-
-
-
-
     public function process_fees($transaction_reference)
     {
 

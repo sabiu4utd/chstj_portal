@@ -1,9 +1,8 @@
 <?php //var_dump($programmes); exit;
 $prg = "";
 foreach ($programmes as $programme) {
-    $prg .= "<option value='" . $programme['program_id'] . "'>" . $programme['program'] . "</option>";
+    $prg .= "<option value='" . $programme['program_id'] . "'>" . $programme['program'] . "</option><br />";
 }
-
 
 
 
@@ -384,6 +383,7 @@ foreach ($programmes as $programme) {
                             <label class="form-label">Programme</label>
                             <select name="programid" class="form-select" required>
                                 <option value="">Select Programme</option>
+                                <option value="1">All Programmes</option>
                                 <?php echo $prg; ?>
                             </select>
                         </div>

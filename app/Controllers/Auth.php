@@ -68,13 +68,6 @@ class Auth extends BaseController
            
           
         }
-
-
-
-
-
-
-
         if ($user) {
             $sessionData = [
                 'userid' => $user['userid'],

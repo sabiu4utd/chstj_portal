@@ -54,6 +54,7 @@ class Student extends BaseController
 
     public function payments()
     {
+         $secrete_key = $this->secrete_key; 
         $stateid = $this->session->get('stateid');
         $payment_history = new Payment_model();
         $history = $payment_history->where('user_id', $this->session->get('userid'))->findAll();
@@ -96,6 +97,7 @@ class Student extends BaseController
             'additional_css' => [],
             'additional_js' => [base_url('assets/js/payment.js')],
             'tution_fees' => $tution_fees,
+            'secrete_key' => $secrete_key,
             // 'peculiar_fees' => $peculiar_fees,
             'amount' => $amount,
             'history' => $history,

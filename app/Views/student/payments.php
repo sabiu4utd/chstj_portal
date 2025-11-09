@@ -178,7 +178,7 @@
         function payWithPaystack() {
             const paystack = new PaystackPop();
             paystack.newTransaction({
-                key: 'pk_test_9e27f42ce0c0dbd5fc415b90caaaa75f7babe222', // Replace with your Paystack public key
+                key: '<?php echo $secrete_key; ?>', // Replace with your Paystack public key
                 email: document.getElementById('email').value,
                 amount: document.getElementById('amount').value * 100, // Amount in kobo
                 onSuccess: (transaction) => {
@@ -199,7 +199,7 @@
         function payWithPaystack1() {
             const paystack = new PaystackPop();
             paystack.newTransaction({
-                key: 'pk_test_9e27f42ce0c0dbd5fc415b90caaaa75f7babe222', // Replace with your Paystack public key
+                key: '<?php echo $secrete_key; ?>', // Replace with your Paystack public key
                 email: document.getElementById('email1').value,
                 amount: document.getElementById('amount1').value * 100, // Amount in kobo
                 onSuccess: (transaction) => {

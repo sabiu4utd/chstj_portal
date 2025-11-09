@@ -50,7 +50,7 @@ abstract class BaseController extends Controller
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
-
+         $this->secrete_key = 'pk_live_deb219cb742cf1e6f557f7665d1e73baf8302239';
         // Preload any models, libraries, etc, here.
        // $session = session();
 

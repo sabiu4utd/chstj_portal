@@ -14,7 +14,8 @@ use App\Models\Bedspace_model;
 use App\Models\Reservation_model;
 use App\Models\Bed_spaces_model;
 use App\Models\Auth_model;
-
+use App\Models\State_model;
+use App\Models\Lgas_model;
 use Ramsey\Uuid\Uuid;
 
 class Student extends BaseController
@@ -44,10 +45,33 @@ class Student extends BaseController
     }
     public function info()
     {
+        $student_model = new Student_model();
+        $student = $student_model->where('user_id', $this->session->get('userid'))->first();
+
+       //get all states 
+        $state_model = new State_model();
+        $states = $state_model->findAll();
+
+        //get all lgas
+        $lga_model = new Lgas_model();
+        $lgas = $lga_model->orderBy('lga_name', 'ASC')->findAll();
+       
+        $statename = $state_model->where('stateid', $student['stateid'])->first();
+        //var_dump($statename);exit;
+        //$lganame = $lga_model->where('id', $student['lgaid'])->first();
+
+
+
+
         $data = [
             'title' => 'My Information',
             'additional_css' => [],
-            'additional_js' => []
+            'additional_js' => [],
+            'student' => $student,
+            'states' => $states,
+            'lgas' => $lgas,
+            'statename' => $statename,
+            
         ];
         return view_with_mobile_support('student/information', $data);
     }
@@ -183,7 +207,9 @@ class Student extends BaseController
             'additional_js' => [base_url('assets/js/accommodation.js')],
             'hostels' => $hostels,
             'current_reservation' => $current_reservation,
-            'reservation_history' => $reservation_history
+            'reservation_history' => $reservation_history,
+            'accommodation_fee' => $this->accommodation_fee,
+            'secrete_key' => $this->secrete_key
         ];
 
         return view_with_mobile_support('student/accomodations', $data);
@@ -437,5 +463,40 @@ class Student extends BaseController
         } else {
             return redirect('student')->with('msg', 'Current password is incorrect.');
         }
+    }
+    public function upload_passport()
+    {
+        $file = $this->request->getFile('passport_url');
+        $fileName = $file->getRandomName();
+        $file->move('assets/passports', $fileName);
+        $profile = new Student_model();
+        $session = session();
+        $profile->where('user_id', $session->get('userid'))->set(['passport' => $fileName])->update();
+        return redirect()->to('student/info');
+       
+    }
+    public function update_info()
+    {
+        $firstname = $this->request->getPost('firstname');
+        $surname = $this->request->getPost('surname');
+        $othername = $this->request->getPost('othername');
+        $gender = $this->request->getPost('gender');
+        $dob = $this->request->getPost('dob');
+        $nationality = $this->request->getPost('nationality');
+        $session = session();
+        $profile = new Student_model();
+        $profile->where('user_id', $session->get('userid'))->set(['firstname' => $firstname, 'surname' => $surname, 'othername' => $othername, 'gender' => $gender, 'dob' => $dob, 'nationality' => $nationality])->update();
+        return redirect()->to('student/info');
+    }
+    public function update_info2()
+    {
+        $email = $this->request->getPost('email');
+        $phone = $this->request->getPost('phone');
+        $stateid = $this->request->getPost('stateid');
+        $lgaid = $this->request->getPost('lgaid');
+        $session = session();
+        $profile = new Student_model();
+        $profile->where('user_id', $session->get('userid'))->set(['email' => $email, 'phone' => $phone, 'stateid' => $stateid, 'lgaid' => $lgaid])->update();
+        return redirect()->to('student/info');
     }
 }

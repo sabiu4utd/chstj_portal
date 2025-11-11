@@ -33,6 +33,10 @@ $routes->get('student/hostel', 'Student::hostel');
 $routes->post('student/get_bedsapces', 'Student::get_bedsapces');
 $routes->get('student/hostel_payments/(:segment)', 'Student::hostel_payments/$1');
 $routes->post('student/changepassword', 'Student::changepassword');
+$routes->post('student/upload_passport', 'Student::upload_passport');
+$routes->post('student/update_info', 'Student::update_info');
+$routes->post('student/update_info2', 'Student::update_info2');
+
 
 
 

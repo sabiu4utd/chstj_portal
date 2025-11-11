@@ -59,8 +59,8 @@ foreach ($hostels as $hostel) {
                         Your reservation has been approved please click here to pay
                         <form id="paymentForm">
                             <input type="hidden" id="email" value="<?php echo $_SESSION['email']; ?>" placeholder="Enter your email" required />
-                            <input type="hidden" id="amount" value="50000" placeholder="Enter amount" required />
-                            <button type="button" onclick="payWithPaystack()" class="btn btn-primary">₦50,000</button>
+                            <input type="hidden" id="amount" value="<?php echo $accommodation_fee; ?>" placeholder="Enter amount" required />
+                            <button type="button" onclick="payWithPaystack()" class="btn btn-primary">₦<?php echo $accommodation_fee; ?></button>
                         </form>
 
                     </div>
@@ -212,7 +212,7 @@ foreach ($hostels as $hostel) {
         function payWithPaystack() {
             const paystack = new PaystackPop();
             paystack.newTransaction({
-                key: 'pk_test_9e27f42ce0c0dbd5fc415b90caaaa75f7babe222', // Replace with your Paystack public key
+                key: '<?php echo $secrete_key; ?>', // Replace with your Paystack public key
                 email: document.getElementById('email').value,
                 amount: document.getElementById('amount').value * 100, // Amount in kobo
                 onSuccess: (transaction) => {

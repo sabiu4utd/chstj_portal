@@ -11,7 +11,7 @@
         <a class="nav-link" href="<?php echo site_url('student/info'); ?>">
             <i class="fas fa-user me-2"></i> My Information
         </a>
-        <a class="nav-link" href="#<?php echo site_url('student/payments'); ?>">
+        <a class="nav-link" href="<?php echo site_url('student/payments'); ?>">
             <i class="fas fa-credit-card me-2"></i> My Payment
         </a>
         <a class="nav-link" href="<?php echo site_url('student/courses'); ?>">
